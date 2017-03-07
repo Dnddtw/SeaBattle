@@ -1,0 +1,9 @@
+#game table tr td:hover {
+	cursor: pointer !important;
+	background-color: #888;
+			transition: background-color 0.15s linear;
+		 -o-transition: background-color 0.15s linear;
+	   -moz-transition: background-color 0.15s linear;
+	-webkit-transition: background-color 0.15s linear;
+}
+/*ghdfkjhg kdfhgk jhgkf*/

@@ -1,0 +1,54 @@
+	In progress:
+		- #userField class "miss" filling if the ship is destroyed.
+		- Normal and hard bots.
+		- The global hints.
+		- Different languages (English, Russian, Ukrainian).
+
+// 07.03.2017
+	
+	Updates:
+		- The game shooting mode is added.
+		- The interface with bots' difficult level is added.
+		- The shooting mechanic is added.
+		- Easy bot is added.
+
+	Fixes:
+		- The user can't use "Reset" or "Randomise" buttons anymore if the game is started.
+		- The draggable and droppable fields are fixed.
+
+
+// 02.03.2017 
+	
+	Updates:
+		- The ship behavior is defined: a randomise or an user ship can be turned. A ship is beaing rotated between vertically and horizontally values. On the left horizontally/vertically by the left mouse button clicking and on the right horizontally/vertically by the right mouse button clicking.
+
+	Fixes: 
+		- The hints is shown correct.
+
+
+
+// 01.03.2017 
+	
+	Updates: 
+		- The list of functions is optimized in script.js
+		- The user can turn the ship model by left mouse button clicking.
+		- "Reset" button is tuned.
+		- User setting is tuned.
+
+
+
+// 28.02.2017
+
+	Updates:
+		- The user interface is added: the "reset" and "randomise" buttons.
+		- Random field filling is tuned.
+		- The ships respond on randomise button.
+
+	Fixes: 
+		- NaN values a moving ship on a table row or a caption field is fixed.
+		- A white background after ship setting if moving can't be set on the same postion with the exist ship is fixed.
+		- Correct display of the borders is fixed.
+
+	Bugs:
+		- Everything is going to hell with different window sizes.
+		- Repeated use of Tips.

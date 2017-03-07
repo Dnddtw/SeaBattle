@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="Styles/main.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<title>Sea Battle</title>
+	<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+  	<script type="text/javascript" src="Scripts/jquery-ui/jquery-ui.js"></script>
+  	<script type="text/javascript" src="Scripts/jquery-ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="Scripts/script.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+<div id="body">
+	<div id="header">
+		<p>Sea Battle</p>
+	</div>
+	<div class="wrapper" id="startForm">
+			<form>
+				<input type="text" name="username" id="username" placeholder="Username" required />
+				<input type="button" id="beforeGameButton" value="Continue" />
+			</form>
+	</div>
+	<div class="wrapper" id="game">
+		<div class="battleField" id="userField">
+			<table id="userTable">
+				<caption id="userCaption">Unknown</caption>
+				<tr class="row0">
+					<th>a</th>
+					<th>b</th>
+					<th>c</th>
+					<th>d</th>
+					<th>e</th>
+					<th>f</th>
+					<th>g</th>
+					<th>h</th>
+					<th>i</th>
+					<th>j</th>
+				</tr>
+				<tr class="tr row1">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+				<tr class="tr row2">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+				<tr class="tr row3">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+				<tr class="tr row4">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+				<tr class="tr row5">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+				<tr class="tr row6">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+				<tr class="tr row7">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+				<tr class="tr row8">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+				<tr class="tr row9">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+				<tr class="tr row10">
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+					<td class="cell"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="wrapper middleWrapper">
+			<input id="start" type="button" value="Start" />			
+			<div id="enemyDestroyedShips">
+				<div class="row row4">
+					<div class="col col4"></div>
+					<div class="col col4"></div>
+					<div class="col col4"></div>
+					<div class="col col4"></div>
+				</div>
+				<p id="p1"><span class="xtext">x</span><span class="score">0</span></p>
+
+				<div class="row row3">
+					<div class="col col3"></div>
+					<div class="col col3"></div>
+					<div class="col col3"></div>
+				</div>
+				<p id="p2"><span class="xtext">x</span><span class="score">0</span></p>
+
+				<div class="row row2">
+					<div class="col col2"></div>
+					<div class="col col2"></div>
+				</div>
+				<p id="p3"><span class="xtext">x</span><span class="score">0</span></p>
+
+				<div class="row row1">
+					<div class="col col1"></div>
+				</div>				
+				<p id="p4"><span class="xtext">x</span><span class="score">0</span></p>
+			</div>
+			<div id="hints">
+				<p>You can press "Reset" button for own ship setting.</p>
+			</div>
+		</div>
+		<div class="battleField" id="enemyField">
+			<table id="enemyTable">
+				<caption>Enemy</caption>
+				<tr>
+					<th>0</th>
+					<th>1</th>
+					<th>2</th>
+					<th>3</th>
+					<th>4</th>
+					<th>5</th>
+					<th>6</th>
+					<th>7</th>
+					<th>8</th>
+					<th>9</th>
+				</tr>
+				<tr class="tr row1">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+				<tr class="tr row2">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+				<tr class="tr row3">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+				<tr class="tr row4">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+				<tr class="tr row5">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+				<tr class="tr row6">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+				<tr class="tr row7">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+				<tr class="tr row8">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+				<tr class="tr row9">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+				<tr class="tr row10">
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+					<td class="enemyCell cell"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="clearfix"></div>
+		<div class="wrapper userInterface">
+			<ul>
+				<li><span id="reset">Reset</span></li>
+				<li><span id="randomise">Randomise</span></li>
+			</ul>
+		</div>		
+		<div class="wrapper botLevel">
+			<ul>
+				<li><span id="easy" class="active">Easy</span></li>
+				<li><span id="medium">Medium</span></li>
+				<li><span id="hard">Hard</span></li>
+			</ul>
+		</div>
+
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,507 @@
+/* CSS default styles */
+
+* {
+	/*transition: all .3s;*/
+	box-sizing: border-box;
+}
+
+td::selection,
+th::selection,
+span::selection {
+	background: none;
+}
+
+html, 
+body {
+  	height: 100%;
+}
+
+body {
+	font: Helvetica, Arial, sans-serif;
+	 background-image: url(../Images/mainBackground1920.jpg); 
+	color: #333;
+}
+
+#body {
+	min-height: 100%;
+	position: relative;
+}
+
+p, td, th, caption {
+	cursor: default !important;
+}
+
+.clearfix::after {
+	display: block;
+	content: "";
+	clear: both;
+}
+
+.wrapper,
+#enemyDestroyedShips {
+	position: relative;
+}
+
+#header {
+	position: absolute;
+	top: 0;
+	min-width: 100%;
+	background: #FF5500;
+	padding: 15px 10px;
+	text-align: center;
+}
+
+#header p {
+	font-weight: bold;
+	color: #FFFFFF;
+	margin: 0;
+	font-size: 24px;
+}
+
+/* CSS Default Styles */
+
+
+
+
+/* FormStartGame's styles */
+
+#startForm {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -65px;
+	margin-left: -200px;
+    font: Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    width: 400px;
+    padding: 16px;
+    background: #F7F7F7;
+}
+
+#startForm input[type="text"] {
+    outline: none;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 4%;
+    border: 1px solid #ccc;
+    padding: 3%;
+    color: #555;
+    font: 95% Arial, Helvetica, sans-serif;
+    	 	box-sizing: border-box;
+   	   -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    	 -o-transition: all 0.30s linear;
+    	-ms-transition: all 0.30s linear;
+       -moz-transition: all 0.30s linear;
+    -webkit-transition: all 0.30s linear;
+}
+
+#startForm input[type="text"]:focus {
+    box-shadow: 0 0 5px #FF5500;
+    padding: 3%;
+    border: 1px solid #FF1100;
+}
+
+#startForm input[type="button"], 
+#game input[type="button"] {
+    font-weight: bold;
+    width: 100%;
+    padding: 3%;
+    background: #FF5500;
+    border-bottom: 2px solid #FF3300;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;    
+    color: #fff;
+    		box-sizing: border-box;
+       -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+#startForm input[type="button"]:hover,
+#game input[type="button"]:hover {
+    background: #FF3300;
+}
+
+/* FormStartGame's Styles*/
+
+
+
+
+/* Game's Styles */
+
+#game {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 651px;
+	margin-top: -326px;
+	margin-left: -480px;
+	padding: 25px;
+	min-width: 960px;
+	max-width: 960px;
+}
+
+/* Battle fields' styles */
+
+#game table caption {
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	color: #000;
+}
+
+#game table tr th,
+#game table tr td {
+	width: 30px;
+	height: 30px;
+	font-weight: 400;
+	text-align: center;
+}
+
+#game table tr td {
+	border: 1px solid #d1d1d1;
+	background-color: #fff;
+			transition: background-color 0.15s linear;
+		 -o-transition: background-color 0.15s linear;
+	   -moz-transition: background-color 0.15s linear;
+	-webkit-transition: background-color 0.15s linear;
+}
+
+#game #userTable tr td.userCell:hover {
+	cursor: pointer !important;
+}
+
+#game table tr th {
+	text-transform: uppercase;
+	border-bottom: 1px solid #000;
+}
+
+#game table tr:last-child td {
+	border-bottom: 1px solid #000;
+}
+
+#game table tr td:first-child {
+	border-left: 1px solid #000;
+}
+
+#game table tr td:last-child {
+	border-right: 1px solid #000;
+}
+#game .tr td:first-child {
+	position: relative;
+}
+
+#game .tr td:first-child:before {
+	font-size: 15px;
+	position: absolute;
+	line-height: 30px;
+	left: -25px;
+	top: 0;
+}
+
+#game .row1 td:first-child:before {
+	content: "0";
+}
+
+#game .row2 td:first-child:before {
+	content: "1";
+}
+
+#game .row3 td:first-child:before {
+	content: "2";
+}
+
+#game .row4 td:first-child:before {
+	content: "3";
+}
+
+#game .row5 td:first-child:before {
+	content: "4";
+}
+
+#game .row6 td:first-child:before {
+	content: "5";
+}
+
+#game .row7 td:first-child:before {
+	content: "6";
+}
+
+#game .row8 td:first-child:before {
+	content: "7";
+}
+
+#game .row9 td:first-child:before {
+	content: "8";
+}
+
+#game .row10 td:first-child:before {
+	content: "9";
+	left: -30px;
+}
+
+/* -------------- */
+
+#game #enemyDestroyedShips .row {
+	position: relative;
+	margin: 0px;
+	margin-bottom: 5px;
+	max-width: 120px;
+	padding: 0px;
+			box-sizing: border-box;
+   	   -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+#game #enemyDestroyedShips tr.row td.hey:last-child {
+	border-right: 1px solid #000;
+}
+
+#game #enemyDestroyedShips .row3 {
+	max-width: 90px;
+}
+
+#game #enemyDestroyedShips .row2 {
+	max-width: 60px;
+}
+
+#game #enemyDestroyedShips .row1 {
+	max-width: 30px;
+}
+
+/* The available ship's styles */
+
+#game #enemyDestroyedShips .row .col {
+	display: inline-block;
+	border-right: 1px solid #d1d1d1;
+	border-bottom: 1px solid #000;
+	border-top: 1px solid #000;
+	background-color: #fff;
+	width: 30px;
+	height: 30px;
+	margin: 0px;
+	padding: 0px;
+			box-sizing: border-box;
+   	   -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    float: left;
+
+}
+
+#game #enemyDestroyedShips .row .col:first-child {
+	border-left: 1px solid #000;
+}
+
+#game #enemyDestroyedShips .row .col:last-child {
+	border-right: 1px solid #000;
+}
+
+#game #enemyDestroyedShips .row:hover .col:last-child {
+	border-right: 1px solid #000;
+}
+
+/* The available ship's styles */
+
+#game #enemyDestroyedShips p {
+	position: absolute;
+	line-height: 30px;
+	margin: 0;
+	padding: 0;
+}
+
+#game #enemyDestroyedShips #p1 {
+	top: 0;
+	left: 120px;
+}
+
+#game #enemyDestroyedShips #p2 {
+	top: 35px;
+	left: 90px;
+}
+
+#game #enemyDestroyedShips #p3 {
+	top: 70px;
+	left: 60px;
+}
+
+#game #enemyDestroyedShips #p4 {
+	top: 105px;
+	left: 30px;
+}
+
+span.score,
+span.xtext {
+	text-transform: uppercase;
+	font-weight: 500;
+}
+
+span.xtext {
+	margin: 0 15px;
+	font-size: 15px;
+}
+
+span.score {
+	font-size: 16px;
+}
+
+/* -------------- */
+
+.middleWrapper {
+	position: absolute;
+	top: 80px;
+	width: 200px;
+	display: inline-block;
+	margin-left: 50px;
+	margin-top: -50px;
+}
+
+#game .middleWrapper input[type="button"] {
+	width: 200px;
+	height: 50px;
+	padding: 11px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	font-size: 16px;
+}
+
+.battleField {
+	display: inline-block;
+	position: relative;
+}
+
+#enemyField {
+	float: right;
+}
+
+#userField {
+	float: left;
+}
+
+#game #hints {
+	margin-top: 50px;
+	margin-left: 15px;
+}
+
+#game #hints:before {
+	content: "Hint: ";
+	position: absolute;
+	left: -20px;
+}
+
+#game .userInterface,
+#game .botLevel {
+	float: left;
+	margin: 10px 0px;
+	padding: 0;
+}
+
+#game .botLevel {
+	float: right;
+}
+
+#game .userInterface ul, 
+#game .botLevel ul {
+	margin: 0;
+	padding: 0;
+}
+
+#game .userInterface ul li, 
+#game .botLevel ul li {
+	list-style: none;
+	display: inline-block;
+	color: #18f;
+	margin-left: 45px;
+	margin-right: 15px;
+}
+
+#game .botLevel ul li {
+	margin-left: 0px;
+	margin-right: 45px;
+}
+
+#game .botLevel ul li:last-child {
+	margin-right: 30px;
+}
+
+#game .userInterface ul::selection, 
+#game .userInterface ul li::selection, 
+#game .userInterface ul li span::selection,
+#game .botLevel ul::selection, 
+#game .botLevel ul li::selection, 
+#game .botLevel ul li span::selection {
+	background: none;
+}
+
+#game .userInterface ul li:hover, 
+#game .botLevel ul li:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#game .userInterface ul li #reset:before {
+	content: url(../Images/reset.png);
+	margin-right: 3px;
+}
+
+#game .userInterface ul li #randomise:before {
+	content: url(../Images/randomise.png);
+	margin-right: 4px;
+}
+
+#game .botLevel ul li #easy::before {
+	content: url(../Images/easy.png);
+	margin-right: 3px;
+}
+
+#game .botLevel ul li #medium::before {
+	content: url(../Images/medium.png);
+	margin-right: 3px;
+}
+
+#game .botLevel ul li #hard::before {
+	content: url(../Images/hard.png);
+	margin-right: 3px;
+}
+
+#game .botLevel ul li span.active {
+	font-weight: bold;
+}
+
+#game #enemyField table.hoverActive tr td.cell:hover {
+	cursor: pointer !important;
+	background-color: #ddd;
+			transition: background-color 0.15s linear;
+		 -o-transition: background-color 0.15s linear;
+	   -moz-transition: background-color 0.15s linear;
+	-webkit-transition: background-color 0.15s linear;
+}
+
+#game #enemyField table tr td.miss::after,
+#game #userField table tr td.miss::after {
+	content: "\2022";
+	color: #888;
+}
+
+#game #enemyField table tr td.miss:hover {
+	cursor: default !important;
+}
+
+#game #enemyField #enemyTable tr td.hit,
+#game #userField #userTable tr td.hit {
+	background-color: red;
+}
+
+/* Game's Styles */
+
+
+
+
+/* Dndd's Testing */
+#game {
+	display: none;
+}
+
+#startForm {
+	/*display: none;*/
+}

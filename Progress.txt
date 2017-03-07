@@ -5,6 +5,16 @@
 		- Different languages (English, Russian, Ukrainian).
 
 // 07.03.2017
+	Upadates: 
+		- #userField class "miss" filling if the ship is destroyed.
+		- The end/winning message is added.
+
+	Fixes: 
+		- The draggable and droppable fields are fixed. 
+
+
+
+// 07.03.2017
 	
 	Updates:
 		- The game shooting mode is added.
@@ -15,6 +25,7 @@
 	Fixes:
 		- The user can't use "Reset" or "Randomise" buttons anymore if the game is started.
 		- The draggable and droppable fields are fixed.
+
 
 
 // 02.03.2017 

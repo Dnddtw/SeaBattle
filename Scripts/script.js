@@ -7,6 +7,7 @@
 // function arrayVerticalRemoving
 // function availableRow
 // function canIStart
+// function canIFinish
 // function correctHorizontal
 // function correctVertical
 // function correctHorizontalTurning
@@ -15,7 +16,7 @@
 // function correctVerticalTurningRight
 // function destroyedShipsEnable
 // function draw
-// function easyEnemyShot 				IN PROGRESS
+// function easyEnemyShot 
 // function fullClear
 // function fullRandomFilling
 // function getElementFromPoint
@@ -33,8 +34,8 @@
 // function isShipDestroyedHorizontal
 // function isShipDestroyedVertical
 // function isShipHorizontal
-// function missesFillingHorizontal     IN PROGRESS
-// function missesFillingVertical     IN PROGRESS
+// function missesFillingHorizontal
+// function missesFillingVertical
 // function newEmptyArray
 // function randomArrayFilling
 // function getRandomNumber
@@ -43,19 +44,19 @@
 // function scoreZero
 // function setUserArray
 // function shipAmount
-// function shipAmountAddBack
+// function shipAmountAdd
 // function shipAmountTake
 // function shipLength
 // function shipLengthRight 
 // function shipTurning
 // function shipTurningRight 
-// function shootingHandler  			IN PROGRESS
+// function shootingHandler
 // function startingCol
 // function startingColRight  
 // function startingRow
 // function unavailableRow
 // function userSetting
-// function userShot			IN PROGRESS
+// function userShot
 
 function ca(variable) {
 	// The user function for userSettinging.
@@ -202,6 +203,8 @@ function availableRow() {
 		.css("border-right", "1px solid #fff")
 		.css("cursor", "pointer")
 		.last().css("border-right", "1px solid #000");
+
+	$(this).draggable("option", "disabled", false);
 }
 
 function canIStart() {
@@ -214,6 +217,18 @@ function canIStart() {
 	});
 
 	return result;
+}
+
+function canIFinish() {
+	var result = true;
+	$("#enemyDestroyedShips .score").each(function() {
+		var score = $(this);
+		if (shipAmount(score)) {
+			result = false;
+		} 
+	});
+
+	return result
 }
 
 function correctHorizontal(array, row, col, len) {
@@ -407,7 +422,7 @@ function destroyedShipsEnable() {
 	// The function draws #enemyDestryoedShips in red color
 
 	$("#enemyDestroyedShips .row").each(function() {
-		$(this).find(".col").css("background-color", "#f20")
+		$(this).find(".col").css("background-color", "rgba(255, 0, 0, 0.65)")
 		.css("border-right", "1px solid #fff")
 		.css("cursor", "default")
 		.last().css("border-right", "1px solid #000");
@@ -424,26 +439,43 @@ function draw(color = "#aaddee") {
 }
 
 function easyEnemyShot() {
-	var isMissed = true;
+	var result = true, 
+		array = getUserArray(),
+		table = $("#userTable .tr");
 
 	do {
-		var row = getRandomNumber(),
-			col = getRandomNumber(),
-			cell = $("#userTable .tr").eq(row).children().eq(col),
+		var rowIndex = getRandomNumber(),
+			columnIndex = getRandomNumber(),
+			cell = table.eq(rowIndex).children().eq(columnIndex),
 			isHitMiss = cell.hasClass("miss") || cell.hasClass("hit");
 	} while (isHitMiss);
 
-	var array = getUserArray();
-	if (array[row][col] == 1) {
+	if (array[rowIndex][columnIndex]) {
 		result = false;
 		cell.removeClass("userCell").addClass("hit"); 
+
+		var isHorizontal = isShipHorizontal(array, rowIndex, columnIndex),
+			rowIndex = startingRow(array, rowIndex, columnIndex, isHorizontal),
+			columnIndex = startingCol(array, rowIndex, columnIndex, isHorizontal),
+			rowLength = shipLength(array, rowIndex, columnIndex, isHorizontal);
+
+		if (isHorizontal) {
+			if (isShipDestroyedHorizontal(table, rowIndex, columnIndex, rowLength)) {
+				missesFillingHorizontal(table, rowIndex, columnIndex, rowLength);
+				hint("enemyDestroyed");
+			} 
+		} else {
+			if (isShipDestroyedVertical(table, rowIndex, columnIndex, rowLength)) {
+				missesFillingVertical(table, rowIndex, columnIndex, rowLength);
+				hint("enemyDestroyed");
+			}
+		}
 	} else {
 		cell.addClass("miss");
 	}
 
 	draw("#1af");
-	return isMissed;
-
+	return result;
 }
 
 function fullClear() {
@@ -594,8 +626,8 @@ function isCell(cell) {
 	return true;
 }
 
-function isShipDestroyedHorizontal(row, col, len) {
-	var cell = $("#enemyTable .tr").eq(row).children().eq(col);
+function isShipDestroyedHorizontal(table, row, col, len) {
+	var cell = table.eq(row).children().eq(col);
 	for (var i = 0; i < len; i++) {
 		if ( !(cell.hasClass("hit")) ) {
 			return false;
@@ -606,8 +638,8 @@ function isShipDestroyedHorizontal(row, col, len) {
 	return true;
 }
 
-function isShipDestroyedVertical(row, col, len) {
-	var cell = $("#enemyTable .tr").eq(row).children().eq(col);
+function isShipDestroyedVertical(table, row, col, len) {
+	var cell = table.eq(row).children().eq(col);
 	for (var i = 0; i < len; i++) {
 		if ( !(cell.hasClass("hit")) ) {
 			return false;
@@ -645,11 +677,10 @@ function isShipHorizontal(array, row, col) {
 	return false;
 }
 
-function missesFillingHorizontal(row, col, len) {
+function missesFillingHorizontal(table, row, col, len) {
 	// The function checks can the ship be turned.
 
-	var table = $("#enemyTable .tr"),
-		iStart = (row == 0) ? 1 : row - 1, 	
+	var iStart = (row == 0) ? 1 : row - 1, 	
 		jStart = (col == 0) ? 0 : col - 1,	
 		iEnd = (row == 9) ? 1 : 2, 			
 		jEnd = (col + len > 9 || col == 0) ? len + 1 : len + 2,
@@ -670,11 +701,10 @@ function missesFillingHorizontal(row, col, len) {
 
 }
 
-function missesFillingVertical(row, col, len) {
+function missesFillingVertical(table, row, col, len) {
 	// The function checks can the ship be turned.
 
-	var table = $("#enemyTable .tr"),
-		iStart = (row == 0) ? 0 : row - 1,
+	var iStart = (row == 0) ? 0 : row - 1,
 		jStart = (col == 0) ? 1 : col - 1,			
 		iEnd = (row + len > 9 || row == 0) ? len + 1 : len + 2,		
 		jEnd = (col == 9) ? 1 : 2, 
@@ -771,7 +801,7 @@ function shipAmount(value) {
 	return +value.text();
 }
 
-function shipAmountAddBack(value) {
+function shipAmountAdd(value) {
 	// The function returns the amount of the available ships if it wasn't set or if it was set on wrong place.
 	var shipsAmount = shipAmount(value);
 	value.text(++shipsAmount);
@@ -870,7 +900,7 @@ function shipTurningRight() {
 		array = getUserArray(),
 		isHorizontal = isShipHorizontal(array, rowIndex, columnIndex);
 
-	rowIndex = startingRow(rowIndex, columnIndex, isHorizontal);
+	rowIndex = startingRow(array, rowIndex, columnIndex, isHorizontal);
 	columnIndex = startingColRight(rowIndex, columnIndex, isHorizontal);
 	var rowLength = shipLengthRight(rowIndex, columnIndex, isHorizontal);
 
@@ -895,6 +925,7 @@ function shipTurningRight() {
 	draw();
 	setUserArray(array);
 	setTimeout(draw, 500);
+	return false;
 }
 
 function shootingHandler() {
@@ -908,6 +939,12 @@ function shootingHandler() {
 			return;
 		}
 
+		if (canIFinish()) {
+			field.off("click", ".enemyCell", shootingHandler);
+			var shot = false;
+			alert("The game is finished. Congratulations. You are winner!");
+		}
+
 		if (shot) {
 			field.off("click", ".enemyCell", shootingHandler);
 			var timerId = setInterval(function() {
@@ -919,7 +956,7 @@ function shootingHandler() {
 				} else {
 					hint("enemyHit");
 				}
-			}, 1);
+			}, 1750);
 		}
 }
 
@@ -1003,7 +1040,9 @@ function userSetting(cell, row, array) {
 function userShot(cell) {
 	var array = getEnemyArray(),
 		columnIndex = cell.index(),
-		rowIndex = cell.parent().index() - 1;
+		rowIndex = cell.parent().index() - 1,
+		table = $("#enemyTable .tr"),
+		score = 0;
 
 	if (array[rowIndex][columnIndex]) {
 		cell.addClass("hit");
@@ -1013,22 +1052,32 @@ function userShot(cell) {
 		rowLength = shipLength(array, rowIndex, columnIndex, isHorizontal);
 
 		if (isHorizontal) {
-			if (isShipDestroyedHorizontal(rowIndex, columnIndex, rowLength)) {
-				missesFillingHorizontal(rowIndex, columnIndex, rowLength);
-				hint("destroyed");
-			} 
+			if (isShipDestroyedHorizontal(table, rowIndex, columnIndex, rowLength)) {
+				missesFillingHorizontal(table, rowIndex, columnIndex, rowLength);
+				hint("userDestroyed");
+				score = rowLength;
+			} else {
+				hint("userHit");
+			}
 		} else {
-			if (isShipDestroyedVertical(rowIndex, columnIndex, rowLength)) {
-				missesFillingVertical(rowIndex, columnIndex, rowLength);
-				hint("destroyed");
+			if (isShipDestroyedVertical(table, rowIndex, columnIndex, rowLength)) {
+				missesFillingVertical(table, rowIndex, columnIndex, rowLength);
+				hint("userDestroyed");
+				score = rowLength;
+			} else {
+				hint("userHit");
 			}
 		}
-		hint("userHit");
-
 	} else {
 		hint("enemyShot");
 		cell.addClass("miss");
 		return true;
+	}
+
+	if (score) {
+		var row = ".row" + score;
+		score = $(row).next().find(".score");
+		shipAmountTake(score);
 	}
 
 	return false;
@@ -1050,7 +1099,8 @@ var hints = {
 	"userHit": "You hit! Take the shot again.",
 	"enemyHit": "He hit. Your opponent is shooting again...",
 	"userShot": "He missed. Your turn to shooting.",
-	"destroyed": "You destroyed the ship. Take your shot."
+	"userDestroyed": "You have destroyed the ship. Take your shot.",
+	"enemyDestroyed": "You opponent has destroyed the ship. He is shooting again..."
 };
 
 
@@ -1062,29 +1112,34 @@ $(document).ready(function() {
 			username = $("#username").val(),
 			userCaption = $('#userCaption');
 
-		// if (username) {
+		if (username) {
 			fullRandomFilling();
 			startForm.hide("fast");
 			game.show("fast");	
 			hint("ready");
-		// 	$(userCaption).text(username);
-		// } else {
-		// 	$("#username").focus();
-		// }
+			$(userCaption).text(username);
+		} else {
+			$("#username").focus();
+		}
 
 
 	});	
 
 
 
-	$("#randomise").on ("click", function() {
+	$("#randomise").on("click", function() {
 		var draggableRows = $(".row");
 
 		unavailableRow(draggableRows);
+		draggableRows.draggable();
 		draggableRows.draggable("destroy");
 		fullRandomFilling();
 		scoreZero();
 		hint("ready");
+	});
+
+	$("#userTable").on("contextmenu", ".cell:not(.userCell)", function() {
+		return false;
 	});
 
 
@@ -1095,6 +1150,7 @@ $(document).ready(function() {
 			draggableRows = $("#enemyDestroyedShips .row");
 
 		fullClear();
+		draggableRows.draggable();
 		draggableRows.each(availableRow);
 		hint("reset");
 		scoreStart();
@@ -1160,10 +1216,6 @@ $(document).ready(function() {
 
 	$("#userField").on("contextmenu", ".userCell", shipTurningRight);
 
-	$("#userField").contextmenu(function() {
-		return false;
-	});
-
 	$("#game .botLevel").on("click", "li", function() {
 		$(this)
 			.parent()
@@ -1183,6 +1235,8 @@ $(document).ready(function() {
 			$("#enemyDestroyedShips").css("marginTop", "150px");
 		});
 		$("#userTable .userCell").css("background-color", "#1af");
+		$("#heading").fadeIn("slow");
+		scoreStart();
 
 		hint("gameStarted");
 		destroyedShipsEnable();

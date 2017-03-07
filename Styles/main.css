@@ -201,43 +201,43 @@ p, td, th, caption {
 }
 
 #game .row1 td:first-child:before {
-	content: "0";
-}
-
-#game .row2 td:first-child:before {
 	content: "1";
 }
 
-#game .row3 td:first-child:before {
+#game .row2 td:first-child:before {
 	content: "2";
 }
 
-#game .row4 td:first-child:before {
+#game .row3 td:first-child:before {
 	content: "3";
 }
 
-#game .row5 td:first-child:before {
+#game .row4 td:first-child:before {
 	content: "4";
 }
 
-#game .row6 td:first-child:before {
+#game .row5 td:first-child:before {
 	content: "5";
 }
 
-#game .row7 td:first-child:before {
+#game .row6 td:first-child:before {
 	content: "6";
 }
 
-#game .row8 td:first-child:before {
+#game .row7 td:first-child:before {
 	content: "7";
 }
 
-#game .row9 td:first-child:before {
+#game .row8 td:first-child:before {
 	content: "8";
 }
 
-#game .row10 td:first-child:before {
+#game .row9 td:first-child:before {
 	content: "9";
+}
+
+#game .row10 td:first-child:before {
+	content: "10";
 	left: -30px;
 }
 
@@ -490,6 +490,13 @@ span.score {
 #game #enemyField #enemyTable tr td.hit,
 #game #userField #userTable tr td.hit {
 	background-color: red;
+}
+
+#game #enemyDestroyedShips p#heading {
+	position: absolute;
+	font-size: 16px;
+	top: -50px;
+	display: none;
 }
 
 /* Game's Styles */

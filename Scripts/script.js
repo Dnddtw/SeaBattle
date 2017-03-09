@@ -1130,15 +1130,14 @@ var hints = {
 
 var know = [
 	"The game of Battleship is thought to have its origins in the French game L'Attaque played during World War I, although parallels have also been drawn to E. I. Horseman's 1890 game Baslinda. The first commercial version of the game was Salvo, published in 1931 in the United States by the Starex company.",
-	"You can rotate the ship on the left by clicking left mouse button and on the right by clicking right mouse button. It works in user setting mode before you didn't press \"Start\" button.",
-	"Easy bot even doesn't know if he hit or missed.",
+	"You can rotate the ship on the left by clicking left mouse button and on the right by clicking right mouse button.  It works as long as you don't press \"Start\" button",
+	"Easy bot doesn't even know if he hit or missed.",
 	"To contact with developer write on dnddtw@gmail.com.",
 	"You can set the ships how you want if you click on \"Reset\" button.",
 	"You can't remove the ship from the user field if it was set. Press \"Reset\" button for new setting.",
 	"The game is still being developed.",
 	"If you click on \"Did you know?\" heading the message will be changed.",
-	"The population of Earth on 2017 years is 7.5 billion persons",
-	"Rempica is jerk)))))000)0"
+	"The population in the world is currently 7.5 bullion persons as of 2017"
 ], used = [0];
 
 
@@ -1159,17 +1158,16 @@ $(document).ready(function() {
 			username = $("#username").val(),
 			userCaption = $('#userCaption');
 
-		if (username) {
+		// if (username) {
 			fullRandomFilling();
 			startForm.hide("fast");
 			game.show("fast");	
 			hint("ready");
 			$("#didyouknow").show();
-			$(userCaption).text(username);
-		} else {
-			$("#username").focus();
-		}
-
+			// $(userCaption).text(username);
+		// } else {
+			// $("#username").focus();
+		// }
 
 	});	
 
@@ -1278,7 +1276,9 @@ $(document).ready(function() {
 			.off("click", ".userCell", shipTurning);
 		$("#enemyTable").addClass("hoverActive");
 		$(this).off("click").fadeOut("slow", function() {
-			$("#enemyDestroyedShips").css("marginTop", "150px");
+			// margin: #enemyDestroyedShips souldn't be moved (margin-top + buttonHeight + margin-bottom) (for different window's sizes)
+			var margin = parseInt($("#start").css("margin-bottom")) + parseInt($("#start").css("height")) + parseInt($("#start").css("margin-top"));
+			$("#enemyDestroyedShips").css("marginTop", margin);
 		});
 		$("#userTable .userCell").css("background-color", "#1af");
 		$("#heading").fadeIn("slow");

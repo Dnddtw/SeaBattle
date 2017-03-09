@@ -1,11 +1,11 @@
 	In progress:
 		- Normal and hard bots.
-		- The global hints.
 		- Different languages (English, Russian, Ukrainian).
 
 // 09.03.2017
 	Updates:
 		- The globals hints "Did you know?" is added.
+		- The website adapts to the large and medium sizes of the screen now.
 
 
 

@@ -15,6 +15,7 @@
 // function correctVerticalTurning
 // function correctVerticalTurningRight
 // function destroyedShipsEnable
+// function didyouknow
 // function draw
 // function easyEnemyShot 
 // function fullClear
@@ -427,6 +428,30 @@ function destroyedShipsEnable() {
 		.css("cursor", "default")
 		.last().css("border-right", "1px solid #000");
 	});
+}
+
+function didyouknow() {
+	var len = know.length,
+		index = getRandomNumber(len);
+	
+	if (used.length > 4) {
+		for (var i = 0; i < 4; i++) {
+			if (index == used[i]) {
+				index = getRandomNumber(len);
+				i = 0;
+			}
+		}
+		used.shift();
+		used.push(index);
+	} else { 
+		used.push(index);
+	}
+
+	$("#didyouknow p")
+		.fadeOut("slow", function() {
+			$(this).text(know[index]);
+		})
+		.fadeIn("slow");
 }
 
 function draw(color = "#aaddee") {
@@ -1094,7 +1119,7 @@ var hints = {
 	"reset": "Move the ship on the user field.",
 	"placeError": "Select another place.",
 	"rotateError": "The ship can't be rotated.",
-	"gameStarted": "The game is started. Shoot!",
+	"gameStarted": "The game is started. Take a shot!",
 	"enemyShot": "You missed. Your opponent is shooting...",
 	"userHit": "You hit! Take the shot again.",
 	"enemyHit": "He hit. Your opponent is shooting again...",
@@ -1103,8 +1128,30 @@ var hints = {
 	"enemyDestroyed": "You opponent has destroyed the ship. He is shooting again..."
 };
 
+var know = [
+	"The game of Battleship is thought to have its origins in the French game L'Attaque played during World War I, although parallels have also been drawn to E. I. Horseman's 1890 game Baslinda. The first commercial version of the game was Salvo, published in 1931 in the United States by the Starex company.",
+	"You can rotate the ship on the left by clicking left mouse button and on the right by clicking right mouse button. It works in user setting mode before you didn't press \"Start\" button.",
+	"Easy bot even doesn't know if he hit or missed.",
+	"To contact with developer write on dnddtw@gmail.com.",
+	"You can set the ships how you want if you click on \"Reset\" button.",
+	"You can't remove the ship from the user field if it was set. Press \"Reset\" button for new setting.",
+	"The game is still being developed.",
+	"If you click on \"Did you know?\" heading the message will be changed.",
+	"The population of Earth on 2017 years is 7.5 billion persons",
+	"Rempica is jerk)))))000)0"
+], used = [0];
+
 
 $(document).ready(function() {
+
+	var knowId = setInterval(didyouknow, 20000);
+
+		$("#didyouknow h3").on("click", function() {
+			clearInterval(knowId);
+			didyouknow();
+			knowId = setInterval(didyouknow, 20000);
+			
+		});
 
 	$('#beforeGameButton').click(function() {
 		var startForm = $('#startForm'),
@@ -1117,6 +1164,7 @@ $(document).ready(function() {
 			startForm.hide("fast");
 			game.show("fast");	
 			hint("ready");
+			$("#didyouknow").show();
 			$(userCaption).text(username);
 		} else {
 			$("#username").focus();
@@ -1124,8 +1172,6 @@ $(document).ready(function() {
 
 
 	});	
-
-
 
 	$("#randomise").on("click", function() {
 		var draggableRows = $(".row");

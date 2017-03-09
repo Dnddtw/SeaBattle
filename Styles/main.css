@@ -43,8 +43,7 @@ p, td, th, caption {
 }
 
 #header {
-	position: absolute;
-	top: 0;
+	position: relative;
 	min-width: 100%;
 	background: #FF5500;
 	padding: 15px 10px;
@@ -131,12 +130,10 @@ p, td, th, caption {
 /* Game's Styles */
 
 #game {
-	position: absolute;
-	top: 50%;
-	left: 50%;
+	position: relative;
+	top: 100px;
+	margin: 0 auto;
 	height: 651px;
-	margin-top: -326px;
-	margin-left: -480px;
 	padding: 25px;
 	min-width: 960px;
 	max-width: 960px;
@@ -501,7 +498,41 @@ span.score {
 
 /* Game's Styles */
 
+#didyouknow {
+	position: relative;
+	top: -75px;
+	padding: 15px 50px 40px;
+	width: 900px;
+	margin: 0 auto;
+	border: 1px solid #18f;
+	box-shadow: 0 0 5px #1af;
+	border-radius: 10px;
+	display: none;
+}
 
+#didyouknow h3 {
+	text-align: left;
+	margin-left: 40px;
+	margin-bottom: 20px;
+  	text-transform: uppercase;
+  	text-rendering: optimizeLegibility; 
+	color: #18f;
+    letter-spacing: .05em;
+    text-shadow: 
+      2px 2px 0px #fff, 
+      4px 4px 0px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+}
+
+#didyouknow h3::selection {
+	background: none;
+}
+
+#didyouknow p {
+	text-indent: 40px;
+	font-size: 14px;
+	text-shadow: 0px 0px 30px rgba(0, 0, 0, 1);
+}
 
 
 /* Dndd's Testing */

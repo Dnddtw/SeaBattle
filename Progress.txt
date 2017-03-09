@@ -1,8 +1,13 @@
 	In progress:
-		- #userField class "miss" filling if the ship is destroyed.
 		- Normal and hard bots.
 		- The global hints.
 		- Different languages (English, Russian, Ukrainian).
+
+// 09.03.2017
+	Updates:
+		- The globals hints "Did you know?" is added.
+
+
 
 // 07.03.2017
 	Upadates: 

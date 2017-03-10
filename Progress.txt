@@ -2,10 +2,17 @@
 		- Normal and hard bots.
 		- Different languages (English, Russian, Ukrainian).
 
+// 10.03.2017 
+	Updates:
+		- The audio effects are added.
+		- The "Did you know?" hins are updated.
+		- The website adapts to the large and medium sizes of the screen now.
+
+
+
 // 09.03.2017
 	Updates:
 		- The globals hints "Did you know?" is added.
-		- The website adapts to the large and medium sizes of the screen now.
 
 
 

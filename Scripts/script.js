@@ -59,40 +59,6 @@
 // function userSetting
 // function userShot
 
-function ca(variable) {
-	// The user function for testing.
-	console.log(variable);
-	alert(variable);
-}
-
-function c(variable) {
-	// The user function for testing.
-	console.log(variable);
-}
-
-function cc(variable1, variable2) {
-	// The user function for testing.
-	console.log(variable1 + " " + variable2);
-}
-
-function a(variable) {
-	// The user function for testing.
-	alert(variable);
-}
-
-function wa(variable) {
-	alert(variable + " has worked!");
-}
-
-function wc(variable) {
-	console.log(variable + " has worked!");
-}
-
-function wca(variable) {
-	alert(variable + " has worked!");
-	console.log(" has worked!");
-}
-
 
 /* ------------------------ Functions ------------------------ */
 
@@ -484,11 +450,13 @@ function easyEnemyShot() {
 			if (isShipDestroyedHorizontal(table, rowIndex, columnIndex, rowLength)) {
 				missesFillingHorizontal(table, rowIndex, columnIndex, rowLength);
 				hint("enemyDestroyed");
+				if (isUnmuted) {	new Audio("Audio/audioDestroyed.mp3").play();	}
 			} 
 		} else {
 			if (isShipDestroyedVertical(table, rowIndex, columnIndex, rowLength)) {
 				missesFillingVertical(table, rowIndex, columnIndex, rowLength);
 				hint("enemyDestroyed");
+				if (isUnmuted) {	new Audio("Audio/audioDestroyed.mp3").play();	}
 			}
 		}
 	} else {
@@ -963,7 +931,9 @@ function shootingHandler() {
 		if (canIFinish()) {
 			field.off("click", ".enemyCell", shootingHandler);
 			var shot = false;
-			alert("The game is finished. Congratulations. You are winner!");
+			setTimeout(function() {
+				alert("The game is finished. Congratulations. You are winner!");
+			}, 250);
 		}
 
 		if (shot) {
@@ -1069,7 +1039,6 @@ function userShot(cell) {
 
 	if (array[rowIndex][columnIndex]) {
 		cell.addClass("hit");
-		if (isUnmuted) {	new Audio("Audio/audioHit.mp3").play();	}
 	var isHorizontal = isShipHorizontal(array, rowIndex, columnIndex),
 		rowIndex = startingRow(array, rowIndex, columnIndex, isHorizontal),
 		columnIndex = startingCol(array, rowIndex, columnIndex, isHorizontal),
@@ -1079,17 +1048,21 @@ function userShot(cell) {
 			if (isShipDestroyedHorizontal(table, rowIndex, columnIndex, rowLength)) {
 				missesFillingHorizontal(table, rowIndex, columnIndex, rowLength);
 				hint("userDestroyed");
+				if (isUnmuted) {	new Audio("Audio/audioDestroyed.mp3").play();	}
 				score = rowLength;
 			} else {
 				hint("userHit");
+				if (isUnmuted) {	new Audio("Audio/audioHit.mp3").play();	}
 			}
 		} else {
 			if (isShipDestroyedVertical(table, rowIndex, columnIndex, rowLength)) {
 				missesFillingVertical(table, rowIndex, columnIndex, rowLength);
 				hint("userDestroyed");
+				if (isUnmuted) {	new Audio("Audio/audioDestroyed.mp3").play();	}
 				score = rowLength;
 			} else {
 				hint("userHit");
+				if (isUnmuted) {	new Audio("Audio/audioHit.mp3").play();	}
 			}
 		}
 	} else {
@@ -1154,7 +1127,7 @@ $(document).ready(function() {
 	$("#didyouknow h3").on("click", function() {
 		clearInterval(knowId);
 		didyouknow();
-		knowId = setInterval(didyouknow, 20000);
+		knowId = setInterval(didyouknow, 40000);
 		
 	});
 
@@ -1163,18 +1136,18 @@ $(document).ready(function() {
 			game = $('#game'),
 			username = $("#username").val(),
 			userCaption = $('#userCaption'),
-			knowId = setInterval(didyouknow, 20000);
+			knowId = setInterval(didyouknow, 40000);
 
-		// if (username) {
+		if (username) {
 			fullRandomFilling();
 			startForm.hide("fast");
 			game.show("fast");	
 			hint("ready");
 			$("#didyouknow").show();
-			// $(userCaption).text(username);
-		// } else {
-			// $("#username").focus();
-		// }
+			$(userCaption).text(username);
+		} else {
+			$("#username").focus();
+		}
 
 	});	
 

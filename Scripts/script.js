@@ -60,23 +60,23 @@
 // function userShot
 
 function ca(variable) {
-	// The user function for userSettinging.
+	// The user function for testing.
 	console.log(variable);
 	alert(variable);
 }
 
 function c(variable) {
-	// The user function for userSettinging.
+	// The user function for testing.
 	console.log(variable);
 }
 
 function cc(variable1, variable2) {
-	// The user function for userSettinging.
+	// The user function for testing.
 	console.log(variable1 + " " + variable2);
 }
 
 function a(variable) {
-	// The user function for userSettinging.
+	// The user function for testing.
 	alert(variable);
 }
 
@@ -434,18 +434,14 @@ function didyouknow() {
 	var len = know.length,
 		index = getRandomNumber(len);
 	
-	if (used.length > 4) {
-		for (var i = 0; i < 4; i++) {
-			if (index == used[i]) {
-				index = getRandomNumber(len);
-				i = 0;
-			}
+	for (var i = 0; i < 4; i++) {
+		if (index == used[i]) {
+			index = getRandomNumber(len);
+			i = 0;
 		}
-		used.shift();
-		used.push(index);
-	} else { 
-		used.push(index);
 	}
+	used.shift();
+	used.push(index);
 
 	$("#didyouknow p")
 		.fadeOut("slow", function() {
@@ -976,9 +972,11 @@ function shootingHandler() {
 				var isEnemyMissed = easyEnemyShot();
 				if (isEnemyMissed) {
 					clearInterval(timerId);
+					if (isUnmuted) {	new Audio("Audio/audioMiss.mp3").play();	}
 					hint("userShot");
 					field.on("click", ".enemyCell", shootingHandler);
 				} else {
+					if (isUnmuted) {	new Audio("Audio/audioHit.mp3").play();	}
 					hint("enemyHit");
 				}
 			}, 1750);
@@ -1071,6 +1069,7 @@ function userShot(cell) {
 
 	if (array[rowIndex][columnIndex]) {
 		cell.addClass("hit");
+		if (isUnmuted) {	new Audio("Audio/audioHit.mp3").play();	}
 	var isHorizontal = isShipHorizontal(array, rowIndex, columnIndex),
 		rowIndex = startingRow(array, rowIndex, columnIndex, isHorizontal),
 		columnIndex = startingCol(array, rowIndex, columnIndex, isHorizontal),
@@ -1096,6 +1095,7 @@ function userShot(cell) {
 	} else {
 		hint("enemyShot");
 		cell.addClass("miss");
+		if (isUnmuted) {	new Audio("Audio/audioMiss.mp3").play();	}
 		return true;
 	}
 
@@ -1111,9 +1111,10 @@ function userShot(cell) {
 
 /* ------------------------ Functions ------------------------ */
 
-// The globas user and enemy arrays
-var globalUserArray = newEmptyArray();
-var globalEnemyArray = randomArrayFilling();
+// The global variables.
+var globalUserArray = newEmptyArray(),
+	globalEnemyArray = randomArrayFilling();
+	
 var hints = {
 	"ready": 'Press "Start" button to continue.',
 	"reset": "Move the ship on the user field.",
@@ -1130,33 +1131,39 @@ var hints = {
 
 var know = [
 	"The game of Battleship is thought to have its origins in the French game L'Attaque played during World War I, although parallels have also been drawn to E. I. Horseman's 1890 game Baslinda. The first commercial version of the game was Salvo, published in 1931 in the United States by the Starex company.",
-	"You can rotate the ship on the left by clicking left mouse button and on the right by clicking right mouse button.  It works as long as you don't press \"Start\" button",
+	"You can rotate the ship on the left by clicking left mouse button or on the right by clicking right mouse button.  It works as long as you don't press \"Start\" button",
 	"Easy bot doesn't even know if he hit or missed.",
 	"To contact with developer write on dnddtw@gmail.com.",
 	"You can set the ships how you want if you click on \"Reset\" button.",
 	"You can't remove the ship from the user field if it was set. Press \"Reset\" button for new setting.",
 	"The game is still being developed.",
 	"If you click on \"Did you know?\" heading the message will be changed.",
-	"The population in the world is currently 7.5 bullion persons as of 2017"
-], used = [0];
+	"The population in the world is currently 7.5 bullion persons as of 2017",
+	"You can choose the bot's difficulty level on the right side of screen.",
+	"You can turn on the sound effects by clicking on the icon."
+];
+
+var used = [0, 3, 7], knowId, isUnmuted = false;
+
+
+
 
 
 $(document).ready(function() {
 
-	var knowId = setInterval(didyouknow, 20000);
-
-		$("#didyouknow h3").on("click", function() {
-			clearInterval(knowId);
-			didyouknow();
-			knowId = setInterval(didyouknow, 20000);
-			
-		});
+	$("#didyouknow h3").on("click", function() {
+		clearInterval(knowId);
+		didyouknow();
+		knowId = setInterval(didyouknow, 20000);
+		
+	});
 
 	$('#beforeGameButton').click(function() {
 		var startForm = $('#startForm'),
 			game = $('#game'),
 			username = $("#username").val(),
-			userCaption = $('#userCaption');
+			userCaption = $('#userCaption'),
+			knowId = setInterval(didyouknow, 20000);
 
 		// if (username) {
 			fullRandomFilling();
@@ -1269,6 +1276,7 @@ $(document).ready(function() {
 	});
 
 	$("#start").on("click", function() {
+
 		$("#reset").off("click");
 		$("#randomise").off("click");
 		$("#userField")
@@ -1282,12 +1290,26 @@ $(document).ready(function() {
 		});
 		$("#userTable .userCell").css("background-color", "#1af");
 		$("#heading").fadeIn("slow");
+		$("#game .audio").show();
+		
 		scoreStart();
-
 		hint("gameStarted");
 		destroyedShipsEnable();
 
+		// if 
 		$("#enemyField").on("click", ".enemyCell", shootingHandler);
+	});
+
+	$("#game .audio").on("click", function() {
+		var onoroff = $(this).attr("src"),
+			str = "Images/audioON.png";
+		if (onoroff == str) {
+			$(this).attr("src", "Images/audioOFF.png");
+			isUnmuted = false;
+		} else {
+			$(this).attr("src", "Images/audioON.png");
+			isUnmuted = true;
+		}
 	});
 
 });

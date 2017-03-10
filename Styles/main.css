@@ -163,8 +163,8 @@ p, td, th, caption {
 /* FormStartGame's styles */
 
 #startForm {
-	/*position: absolute;*/
-	top: 375px;
+	position: absolute;
+	top: 425px;
 	left: 50%;
 	margin-top: -65px;
 	margin-left: -200px;
@@ -173,6 +173,10 @@ p, td, th, caption {
     width: 400px;
     padding: 16px;
     background: #F7F7F7;
+          box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.25);
+       -o-box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.25);
+     -moz-box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.25);
 }
 
 #startForm input[type="text"] {
@@ -639,6 +643,14 @@ span.score {
 	display: none;
 }
 
+#game img.audio {
+	position: absolute;
+	top: 15px;
+	left: 100px;
+	cursor: pointer;
+	display: none;
+}
+
 
 /* MEDIA REQUIRES */
 
@@ -653,13 +665,16 @@ span.score {
 	}
 
 	#startForm {
-		top: 325px;
+		top: 350px;
 	}
-
-
 }
 
 @media all and (max-height: 767px), all and (max-width: 970px) {
+	#game img.audio {
+		top: 0px;
+		left: 90px;
+	}
+
 	#game .middleWrapper input[type="button"] {
 		width: 180px;
 		height: 46px;
@@ -734,17 +749,17 @@ span.score {
 	}
 
 	#game #enemyDestroyedShips #p2 {
-		top: 30px;
+		top: 31px;
 		left: 75px;
 	}
 
 	#game #enemyDestroyedShips #p3 {
-		top: 60px;
+		top: 61px;
 		left: 50px;
 	}
 
 	#game #enemyDestroyedShips #p4 {
-		top: 90px;
+		top: 91px;
 		left: 25px;
 	}
 
@@ -773,7 +788,7 @@ span.score {
 	}
 
 	#didyouknow p {
-		text-indent: 40px;
+		text-indent: 30px;
 		font-size: 14px;
 		text-shadow: 0px 0px 30px rgba(0, 0, 0, 1);
 	}
@@ -817,5 +832,4 @@ span.score {
 	#game .botLevel ul li span::selection {
 		background: none;
 	}
-
 }

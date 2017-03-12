@@ -1,6 +1,11 @@
 	In progress:
 		- Normal and hard bots.
-		- Different languages (English, Russian, Ukrainian).
+
+// 12.03.2017 
+	Updates:
+		- The website adapts to the large and medium sizes of the screen with JavaScript/jQuery.
+		- The languages are added.
+
 
 // 10.03.2017 
 	Updates:

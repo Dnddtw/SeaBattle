@@ -23,8 +23,11 @@
 // function getElementFromPoint
 // function getEnemyArray
 // function getHint
+// function getHintKey
 // function getHorizontalShip
 // function getHorizontalShipRight
+// function getKnowIndex
+// function getLanguage
 // function getVerticalShip
 // function getUserArray
 // function hint
@@ -35,6 +38,7 @@
 // function isShipDestroyedHorizontal
 // function isShipDestroyedVertical
 // function isShipHorizontal
+// function languages
 // function missesFillingHorizontal
 // function missesFillingVertical
 // function newEmptyArray
@@ -58,6 +62,41 @@
 // function unavailableRow
 // function userSetting
 // function userShot
+// function windowSize
+
+function ca(variable) {
+	// The user function for testing.
+	console.log(variable);
+	alert(variable);
+}
+
+function c(variable) {
+	// The user function for testing.
+	console.log(variable);
+}
+
+function cc(variable1, variable2) {
+	// The user function for testing.
+	console.log(variable1 + " " + variable2);
+}
+
+function a(variable) {
+	// The user function for testing.
+	alert(variable);
+}
+
+function wa(variable) {
+	alert(variable + " has worked!");
+}
+
+function wc(variable) {
+	console.log(variable + " has worked!");
+}
+
+function wca(variable) {
+	alert(variable + " has worked!");
+	console.log(" has worked!");
+}
 
 
 /* ------------------------ Functions ------------------------ */
@@ -396,7 +435,11 @@ function destroyedShipsEnable() {
 	});
 }
 
-function didyouknow() {
+function didyouknow(str) {
+	if (str !== undefined) {
+		return 
+	}
+
 	var len = know.length,
 		index = getRandomNumber(len);
 	
@@ -498,6 +541,15 @@ function getHint(key) {
 	return hints[key];
 }
 
+function getHintKey() {
+	var message = $("#hints p").text();
+	for (var key in hints) {
+		if (hints[key] == message) {
+			return key;
+		} 
+	}
+}
+
 function getHorizontalShip(row, col, len) {
 	// The function defines the ship by horizontally when an user clicks on "userCell".
 
@@ -524,6 +576,19 @@ function getHorizontalShipRight(row, col, len) {
 	}
 
 	return collection;
+}
+
+function getKnowIndex() {
+	var message = $("#didyouknow p").text();
+	for (var i = 0; i < know.length; i++) {
+		if (know[i] == message) {
+			return i;
+		} 
+	}
+}
+
+function getLanguage() {
+	return whatLanguage;
 }
 
 function getVerticalShip(row, col, len) {
@@ -664,6 +729,97 @@ function isShipHorizontal(array, row, col) {
 	}
 
 	return false;
+}
+
+function languages(language) {
+	var index = getKnowIndex(),
+		key = getHintKey(),
+		lan = $("#language"),
+		head = $("#heading"),
+		logo = $("#logo"),
+		userLi = $(".userInterface li"),
+		botLi = $(".botLevel li");
+
+	switch (language) {
+		case "english":
+			know = knowEnglish;
+			whatLanguage = "english";
+			title = titlesEnglish;
+			hints = hintsEnglish;
+			$("#hints p").text(hints[key]);
+			$("#didyouknow p").text(knowEnglish[index]);
+			lan.parent().css("padding-left", "0px");
+			logo.parent().css("margin-left", "-74px");
+			head.css("top", "-50px");
+			if (window.matchMedia("(max-width: 970px)").matches || window.matchMedia("(max-height: 767px)").matches) {
+				userLi.css("margin-left", "25px");
+				botLi.css("margin-right", "25px")
+					.last().css("margin-right", "20px");
+			} else {
+				userLi.css("margin-left", "45px");
+				botLi
+					.css("margin-right", "45px")
+					.last().css("margin-right", "30px");
+			}
+			break;
+
+		case "ukrainian": 			
+			know = knowUkrainian;
+			whatLanguage = "ukrainian";
+			title = titlesUkrainian;
+			hints = hintsUkrainian;
+			$("#hints p").text(hints[key]);
+			$("#didyouknow p").text(knowUkrainian[index]);
+			lan.parent().css("padding-left", "22px");
+			logo.parent().css("margin-left", "-100px");
+			head.css("top", "-65px");
+			if (window.matchMedia("(max-width: 970px)").matches || window.matchMedia("(max-height: 767px)").matches) {
+				userLi.css("margin-left", "20px");
+				botLi
+					.css("margin-right", "10px")
+					.last().css("margin-right", "7px");
+			} else {
+				userLi.css("margin-left", "40px");
+				botLi.css("margin-right", "20px");
+			}
+			break;
+
+		case "russian":
+			know = knowRussian;
+			whatLanguage = "russian";
+			title = titlesRussian;
+			hints = hintsRussian;
+			$("#hints p").text(hints[key]);
+			$("#didyouknow p").text(knowRussian[index]);
+			lan.parent().css("padding-left", "20px");
+			logo.parent().css("margin-left", "-100px");
+			head.css("top", "-65px");
+			if (window.matchMedia("(max-width: 969px)").matches || window.matchMedia("(max-height: 767px)").matches) {
+				userLi.css("margin-left", "20px");
+				botLi.css("margin-right", "10px");
+			} else {
+				userLi.css("margin-left", "40px");
+				botLi.css("margin-right", "22px");
+			}
+			break;
+	}
+	
+	$("#header .span").removeClass("active");
+	$(this).addClass("active");		
+	$("#didyouknow h3").text(title["didyouknow"]);
+	$("#reset").text(title["reset"]);
+	$("#randomise").text(title["randomise"]);
+	$("#easy").text(title["easy"]);
+	$("#heading").text(title["shipsleft"]);
+	$("#medium").text(title["medium"]);
+	$("#hard").text(title["hard"]);
+	$("#start").attr("value", title["start"]);
+	$("#beforeGameButton").attr("value", title["continue"]);
+	$("#username").attr("placeholder", title["username"]);
+	$("#enemyTable caption").text(title["opponent"]);
+	logo.text(title["seabattle"]);
+	lan.text(title["language"]);
+
 }
 
 function missesFillingHorizontal(table, row, col, len) {
@@ -932,7 +1088,7 @@ function shootingHandler() {
 			field.off("click", ".enemyCell", shootingHandler);
 			var shot = false;
 			setTimeout(function() {
-				alert("The game is finished. Congratulations. You are winner!");
+				alert("");
 			}, 250);
 		}
 
@@ -1081,15 +1237,113 @@ function userShot(cell) {
 	return false;
 }
 
+function windowSize() {
+	var language = getLanguage(),
+		userLi = $(".userInterface li"),
+		botLi = $(".botLevel li");
+
+	switch (language) {
+		case "english":
+			wc("english height < 767");
+			if (window.matchMedia("(max-width: 970px)").matches || window.matchMedia("(max-height: 767px)").matches) {
+				userLi.css("margin-left", "25px");
+				botLi.css("margin-right", "25px")
+					.last().css("margin-right", "20px");
+			} else {
+				userLi.css("margin-left", "45px");
+				botLi
+					.css("margin-right", "45px")
+					.last().css("margin-right", "30px");;
+			}
+			break;
+
+		case "ukrainian": 	
+			wc("ukrainian height < 767");		
+			if (window.matchMedia("(max-width: 970px)").matches || window.matchMedia("(max-height: 767px)").matches) {
+				userLi.css("margin-left", "20px");
+				botLi
+					.css("margin-right", "10px")
+					.last().css("margin-right", "7px");
+			} else {
+				userLi.css("margin-left", "40px");
+				botLi.css("margin-right", "20px");
+			}
+			break;
+
+		case "russian":
+			wc("russian height < 767");
+			if (window.matchMedia("(max-width: 969px)").matches || window.matchMedia("(max-height: 767px)").matches) {
+				userLi.css("margin-left", "20px");
+				botLi.css("margin-right", "10px");
+			} else {
+				userLi.css("margin-left", "40px");
+				botLi.css("margin-right", "22px");
+			}
+			break;
+	}
+}
+
 
 /* ------------------------ Functions ------------------------ */
 
 // The global variables.
 var globalUserArray = newEmptyArray(),
-	globalEnemyArray = randomArrayFilling();
+	globalEnemyArray = randomArrayFilling(),
+	whatLanguage = "english";
+
+var title = titlesEnglish = {
+	"language": "Languages",
+	"didyouknow": "did you know?",
+	"seabattle": "sea battle",
+	"continue": "continue",
+	"username": "username",
+	"reset": "Reset", 
+	"randomise": "Randomise",
+	"easy": "Easy",
+	"medium": "Medium",
+	"hard": "Hard",
+	"start": "Start", 
+	"opponent": "Opponent",
+	"shipsleft": "Oppopent's ships left:",
+	"gamewin": "The game is finished. Congratulations, you are winner!",
+	"gamelose": ""
+}, titlesUkrainian = {
+	"language": "Мови",
+	"didyouknow": "а ви знали?",
+	"seabattle": "морський бій",
+	"continue": "Продовжити",
+	"username": "Ім'я користувача",
+	"reset": "Очистити", 
+	"randomise": "Випадково",
+	"easy": "Легкий",
+	"medium": "Середній",
+	"hard": "Складний",
+	"start": "Старт", 
+	"opponent": "Суперник",
+	"shipsleft": "Залишилось суден суперника",
+	"gamewin": "Гра закінчена. Наші вітання, Ви - переможець!",
+	"gamelose": ""
+},	titlesRussian = {
+	"language": "Языки",
+	"didyouknow": "а вы знали?",
+	"seabattle": "морской бой",
+	"continue": "Продолжить",
+	"username": "Имя пользователя",
+	"reset": "Очистить", 
+	"randomise": "Случайно",
+	"easy": "Лёгкий",
+	"medium": "Средний",
+	"hard": "Тяжёлый",
+	"start": "Старт", 
+	"opponent": "Соперник",
+	"shipsleft": "Осталось кораблей соперника:",
+	"gamewin": "Игра закончена. Поздравляем, Вы - победитель!",
+	"gamelose": ""
+};
 	
-var hints = {
-	"ready": 'Press "Start" button to continue.',
+var hints = hintsEnglish = {
+	"ready": "Press \"Start\" button to continue.",
+	"notready": "You can't start the game if all the ships weren't set.",
 	"reset": "Move the ship on the user field.",
 	"placeError": "Select another place.",
 	"rotateError": "The ship can't be rotated.",
@@ -1100,9 +1354,36 @@ var hints = {
 	"userShot": "He missed. Your turn to shooting.",
 	"userDestroyed": "You have destroyed the ship. Take your shot.",
 	"enemyDestroyed": "You opponent has destroyed the ship. He is shooting again..."
+}, hintsUkrainian = {
+	"ready": "Нажміть \"Старт\", щоб продовжити.",
+	"notready": "Ви не можете розпочати гру, поки не встановили всі судна.",
+	"reset": "Перетягніть судно на Ваше ігрове поле.",
+	"placeError": "Виберіть інакше місце.",
+	"rotateError": "Судно не можна повернути.",
+	"gameStarted": "Гра розпочалась. Стріляйте!",
+	"enemyShot": "Ви промахнулись. Хід суперника...",
+	"userHit": "Ви влучили! Ваш хід.",
+	"enemyHit": "Суперник влучив. Хід суперника...",
+	"userShot": "Суперник промахнувся. Ваш хід.",
+	"userDestroyed": "Ви знищили судно. Ваш хід.",
+	"enemyDestroyed": "Ваш суперник знищив корабель. Хід суперника..."
+}, hintsRussian = {
+	"ready": "Нажмите \"Старт\" для продолжения.",
+	"notready": "Вы не можете начать игру, пока не установлены все корабли.",
+	"reset": "Перетяните корабль на Ваше игровое поле.",
+	"placeError": "Выберите другое место.",
+	"rotateError": "Корабль нельзя повернуть.",
+	"gameStarted": "Игра началась. Стреляйте!",
+	"enemyShot": "Вы промахнулись. Ход соперника...",
+	"userHit": "Вы попали! Ваш ход.",
+	"enemyHit": "Соперник попал. Ход соперника...",
+	"userShot": "Соперник промазал. Ваш ход.",
+	"userDestroyed": "Вы уничтожили корабль. Ваш ход.",
+	"enemyDestroyed": "Ваш соперник уничтожил корабль. Ход соперника..."
 };
 
-var know = [
+var know = knowEnglish = [
+	"You are welcome in SEA BATTLE game. We wish you the best of luck!",
 	"The game of Battleship is thought to have its origins in the French game L'Attaque played during World War I, although parallels have also been drawn to E. I. Horseman's 1890 game Baslinda. The first commercial version of the game was Salvo, published in 1931 in the United States by the Starex company.",
 	"You can rotate the ship on the left by clicking left mouse button or on the right by clicking right mouse button.  It works as long as you don't press \"Start\" button",
 	"Easy bot doesn't even know if he hit or missed.",
@@ -1114,15 +1395,60 @@ var know = [
 	"The population in the world is currently 7.5 bullion persons as of 2017",
 	"You can choose the bot's difficulty level on the right side of screen.",
 	"You can turn on the sound effects by clicking on the icon."
+],	knowUkrainian = [
+	"Ласково просимо до гри МОРСЬКИЙ БІЙ. Бажаємо Вам успіху!",
+	"Гра Морський бій, як вважають, має свої витоки від французької гри L'Attaque, в яку грали під час Першої світової війни, хоча паралелі також було звернуто на гру Baslinda у 1980 році. Перша комерційна версія гри була Salvo, опублікована в 1931 році в Сполучених Штатах Америки компанією Starex.",
+	"Ви можете повернути судно наліво натиснувши ліву клавішу мишки, та направо - праву клавішу мишки. Такі функції доступні лише коли ви встановлюєте судна власноруч.",
+	"Легкий бот навіть не знає влучив він в судно чи ні.",
+	"Для зв'язку з автором гри, Ви можете відправити лист на пошту dnddtw@gmail.com.",
+	"Ви можете власноруч встановити всі судна натиснувши на кнопку \"Очистити\".",
+	"Ви не можете видалити судно, якщо вже встановили його на своє ігрове поле. Натисніть кнопку \"Очистити\", щоб розпочати встановлення спочатку.",
+	"Гра все ще знаходиться в стані розробки.",
+	"Натиснувши на заголовок \"А Ви знали?\" - повідомлення зміниться.",
+	"Станом на 2017 рік, населення нашої планети становить 7.5 мільярдів осіб.",
+	"Ви можете обрати складність бота в правій частині екрану.",
+	"Ви моежете увімкнути звукові еффекти настивнувши на відповідну іконку."
+],	knowRussian = [
+	"Добро пожаловать в игру МОРСКОЙ БОЙ. Желаем Вам успеха!",
+	"Игра Морской бой, как полагают, имеет свои истоки от французской игры L'Attaque, в которую играли во время Первой мировой войны, хотя параллели также было обращены на игру Baslinda в 1980 году. Первая коммерческая версия игры была Salvo, опубликованная в 1931 году в Соединённых Штатах Америки компанией Starex.",
+	"Вы можете повернуть корабль налево нажав левую клавишу мышки, и направо - правую клавишу мышки. Эти функции доступны только в режиме установки кораблей.",
+	"Легкий бот даже не знает попал ли он в корабль или нет.",
+	"Чтобы связаться с автором игры, Вы можете отправить письмо на почту dnddtw@gmail.com.",
+	"Вы можете самостоятельно установить все корабли нажав на кнопку \"Очистить\".",
+	"Вы не можете удалить корабль, если уже установили его на своё игровое поле. Нажмите кнопку \"Очистить\", чтобы начать установку сначало.",
+	"Игра все ещё находится в состоянии разработки.",
+	"Нажав на заголовок \"А Вы знали?\" - сообщение измениться.",
+	"На состояние 2017 года, население нашей планеты составляет 7.5 миллиардов человек.",
+	"Вы можете выбрать сложность бота в правой часте экрана.",
+	"Вы моежете включить звуковые эффекты нажав на соответствующую иконку."
 ];
 
-var used = [0, 3, 7], knowId, isUnmuted = false;
-
-
-
-
+var used = [0, 4, 8], knowId, isUnmuted = false;
 
 $(document).ready(function() {
+
+	$(window).resize(windowSize);
+
+	$("#english").on("click", function() {
+		var isNotActive = !($(this).hasClass("active"));
+		if (isNotActive) {
+			languages("english");
+		}
+	});
+
+	$("#ukrainian").on("click", function() {
+		var isNotActive = !($(this).hasClass("active"));
+		if (isNotActive) {
+			languages("ukrainian");
+		}
+	});
+
+	$("#russian").on("click", function() {
+		var isNotActive = !($(this).hasClass("active"));
+		if (isNotActive) {
+			languages("russian");
+		}
+	});
 
 	$("#didyouknow h3").on("click", function() {
 		clearInterval(knowId);
@@ -1138,16 +1464,16 @@ $(document).ready(function() {
 			userCaption = $('#userCaption'),
 			knowId = setInterval(didyouknow, 40000);
 
-		if (username) {
+		// if (username) {
 			fullRandomFilling();
 			startForm.hide("fast");
 			game.show("fast");	
 			hint("ready");
 			$("#didyouknow").show();
-			$(userCaption).text(username);
-		} else {
-			$("#username").focus();
-		}
+			// $(userCaption).text(username);
+		// } else {
+			// $("#username").focus();
+		// }
 
 	});	
 
@@ -1249,25 +1575,29 @@ $(document).ready(function() {
 	});
 
 	$("#start").on("click", function() {
+		if (canIStart()) {
+			$("#reset").off("click");
+			$("#randomise").off("click");
+			$("#userField")
+				.off("contextmenu", ".userCell", shipTurningRight)
+				.off("click", ".userCell", shipTurning);
+			$("#enemyTable").addClass("hoverActive");
+			$(this).off("click").fadeOut("slow", function() {
+				// margin: #enemyDestroyedShips souldn't be moved (margin-top + buttonHeight + margin-bottom) (for different window's sizes)
+				var margin = parseInt($("#start").css("margin-bottom")) + parseInt($("#start").css("height")) + parseInt($("#start").css("margin-top"));
+				$("#enemyDestroyedShips").css("marginTop", margin);
+			});
+			$("#userTable .userCell").css("background-color", "#1af");
+			$("#heading").fadeIn("slow");
+			$("#game .audio").show();
+			
+			scoreStart();
+			hint("gameStarted");
+			destroyedShipsEnable();			
+		} else {
+			hint("notready");
+		}
 
-		$("#reset").off("click");
-		$("#randomise").off("click");
-		$("#userField")
-			.off("contextmenu", ".userCell", shipTurningRight)
-			.off("click", ".userCell", shipTurning);
-		$("#enemyTable").addClass("hoverActive");
-		$(this).off("click").fadeOut("slow", function() {
-			// margin: #enemyDestroyedShips souldn't be moved (margin-top + buttonHeight + margin-bottom) (for different window's sizes)
-			var margin = parseInt($("#start").css("margin-bottom")) + parseInt($("#start").css("height")) + parseInt($("#start").css("margin-top"));
-			$("#enemyDestroyedShips").css("marginTop", margin);
-		});
-		$("#userTable .userCell").css("background-color", "#1af");
-		$("#heading").fadeIn("slow");
-		$("#game .audio").show();
-		
-		scoreStart();
-		hint("gameStarted");
-		destroyedShipsEnable();
 
 		// if 
 		$("#enemyField").on("click", ".enemyCell", shootingHandler);

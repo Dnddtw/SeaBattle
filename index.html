@@ -18,8 +18,18 @@
 <body>
 <div id="body">
 	<div id="header">
-
-		<div class="logo"><span>Sea Battle</span></div>
+		<div class="languages">
+			<ul>
+				<li><span id="language">Languages</span>
+					<ul>
+						<li><span id="english" class="span active">English</span></li>
+						<li><span id="ukrainian" class="span">Ukrainian</span></li>
+						<li><span id="russian" class="span">Russian</span></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="logo"><span id="logo">Sea Battle</span></div>
 	</div>
 	<div class="wrapper" id="startForm">
 			<form>
@@ -169,7 +179,7 @@
 			<input id="start" type="button" value="Start" />
 			<img src="Images/audioOFF.png" alt="" class="audio">			
 			<div id="enemyDestroyedShips">
-				<p id="heading">Opponent's ships left</p>
+				<p id="heading">Opponent's ships left:</p>
 				<div class="row row4">
 					<div class="col col4"></div>
 					<div class="col col4"></div>
@@ -197,7 +207,7 @@
 				<p id="p4"><span class="xtext">x</span><span class="score">0</span></p>
 			</div>
 			<div id="hints">
-				<p>You can press "Reset" button for own ship setting.</p>
+				<p></p>
 			</div>
 		</div>
 		<div class="battleField" id="enemyField">
@@ -346,15 +356,15 @@
 		</div>		
 		<div class="wrapper botLevel">
 			<ul>
-				<li><span id="easy" class="active">Easy</span></li>
-				<li><span id="medium">Medium</span></li>
+				<li><span id="easy">Easy</span></li>
+				<li><span id="medium" class="active">Medium</span></li>
 				<li><span id="hard">Hard</span></li>
 			</ul>
 		</div>
 	</div>
 	<div id="didyouknow">
 		<h3>Did you know?</h3>
-		<p>You are welcome in SEA BATTLE game. We wish you the best of luck!.</p>
+		<p>You are welcome in SEA BATTLE game. We wish you the best of luck!</p>
 	</div>
 </div>
 </body>

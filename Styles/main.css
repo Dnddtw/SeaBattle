@@ -1,7 +1,6 @@
 /* CSS default styles */
 
 * {
-	/*transition: all .3s;*/
 	box-sizing: border-box;
 }
 
@@ -23,7 +22,6 @@ body {
 }
 
 #body {
-	/*min-height: 100%;*/
 	max-height: 100%;
 	position: relative;
 }
@@ -52,12 +50,14 @@ p, td, th, caption {
 	position: relative;
 	background: #FF5500;
 	padding: 15px 10px;
-	text-align: center;
+	height: 64px;
 }
 
 #header .logo {
-	width: 120px;
-	margin: 0 auto;
+	width: auto;
+	position: absolute;
+	left: 50%;
+	margin-left: -74px;
 }
 
 #header .logo span {
@@ -65,96 +65,96 @@ p, td, th, caption {
 	color: #FFFFFF;
 	margin: 0;
 	font-size: 24px;
+	text-transform: uppercase;
 }
 
 .languages > ul {
-  position: relative;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  left: 31%;
-  top: 10px;
-  float: left;
+  	position: relative;
+  	list-style: none;
+  	padding: 0;
+  	margin: 0;
+  	left: 25%;
+  	top: -15px;
+  	float: left;
 }
 
 .languages ul li {
-  position: relative; 
-  cursor: pointer;
+  	position: relative; 
+  	cursor: pointer;
 }
 
 .languages ul > li {
-  display: block;
+  	display: block;
 }
 
-.languages ul li a {
-  line-height: 14px;
-  padding: 0 20px;
-  height: 60px;
-  color: #fff;
+.languages ul li span {
+ 	padding: 0 20px;
+ 	height: 64px;
+ 	color: #fff;
 }
-
-.languages ul li a:hover {
-  color: #18F;
-} 
 
 .languages > ul > li > ul {
-  position: absolute;
-  z-index: 2;
-  left: 0;
-  top: 61px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: none;
+  	position: absolute;
+  	z-index: 2;
+  	left: -12px;
+  	top: 64px;
+  	padding: 0;
+  	margin: 0;
+  	list-style: none;
+  	display: block;
 
 }
 
 .languages > ul > li:hover > ul {
-          box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.25);
-     -moz-box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.25);
-  -webkit-box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.25);
+       -moz-box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.25);
+  	-webkit-box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.25);
 }
 
-.languages > ul > li:hover > ul li a {
-  opacity: 1;
-  height: 45px;
-          transition: all .1s linear;
-       -o-transition: all .1s linear;
-     -moz-transition: all .1s linear;
-  -webkit-transition: all .1s linear;
+.languages > ul > li:hover > ul li span {
+  	opacity: 1;
+  	height: 45px;
+            transition: all .1s linear;
+         -o-transition: all .1s linear;
+       -moz-transition: all .1s linear;
+  	-webkit-transition: all .1s linear;
 }
 
-.languages > ul > li > ul a {
-  display: block;
-  text-decoration: none;
-  color: #222;
-  width: 150px;
-  line-height: 50px !important;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
-  padding: 0 5px;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-          transition: all .1s linear .1s;
-       -o-transition: all .1s linear .1s;
-     -moz-transition: all .1s linear .1s;
-  -webkit-transition: all .1s linear .1s;
+.languages > ul > li > ul span {
+  	display: block;
+  	text-decoration: none;
+  	color: #f60;
+  	width: 150px;
+  	line-height: 50px !important;
+  	background: #fff;
+  	border-bottom: 1px solid #ddd;
+  	text-align: center;
+  	padding: 0 5px;
+  	height: 0;
+  	overflow: hidden;
+  	opacity: 0;
+            transition: all .1s linear .1s;
+         -o-transition: all .1s linear .1s;
+       -moz-transition: all .1s linear .1s;
+  	-webkit-transition: all .1s linear .1s;
+}
+
+.languages > ul > li > ul > li:hover span {
+	font-weight: bolder;
 }
 
 .languages > ul > li {
-  float: left;
-  position: relative;
+  	float: left;
+  	position: relative;
 }
 
-.languages > ul > li > a {
-  padding: 0 20px;
-  color: #777;
-  display: block;
-  line-height: 60px !important;
-  text-transform: uppercase;
-  text-decoration: none;
+.languages > ul > li > span {
+  	padding: 0 20px;
+  	color: #fff;
+  	display: block;
+  	line-height: 64px !important;
+  	text-transform: uppercase;
+  	text-decoration: none;
 }
 
 /* Header and Languages Styles */
@@ -228,7 +228,6 @@ p, td, th, caption {
 
 
 
-
 /* Game's Styles */
 
 #game {
@@ -239,6 +238,10 @@ p, td, th, caption {
 	min-width: 960px;
 	max-width: 960px;
 	margin-bottom: 135px;
+	        transition: all 0.25s ease;
+         -o-transition: all 0.25s ease;
+       -moz-transition: all 0.25s ease;
+  	-webkit-transition: all 0.25s ease;
 }
 
 /* Battle fields' styles */
@@ -261,10 +264,10 @@ p, td, th, caption {
 #game table tr td {
 	border: 1px solid #d1d1d1;
 	background-color: #fff;
-			transition: background-color 0.15s linear;
-		 -o-transition: background-color 0.15s linear;
-	   -moz-transition: background-color 0.15s linear;
-	-webkit-transition: background-color 0.15s linear;
+			transition: background-color 0.25s linear;
+		 -o-transition: background-color 0.25s linear;
+	   -moz-transition: background-color 0.25s linear;
+	-webkit-transition: background-color 0.25s linear;
 }
 
 #game #userTable tr td.userCell:hover {
@@ -291,7 +294,7 @@ p, td, th, caption {
 	position: relative;
 }
 
-#game .tr td:first-child:before {
+#game .tr td:first-child::before {
 	font-size: 15px;
 	position: absolute;
 	line-height: 30px;
@@ -299,43 +302,43 @@ p, td, th, caption {
 	top: 0;
 }
 
-#game .row1 td:first-child:before {
+#game .row1 td:first-child::before {
 	content: "1";
 }
 
-#game .row2 td:first-child:before {
+#game .row2 td:first-child::before {
 	content: "2";
 }
 
-#game .row3 td:first-child:before {
+#game .row3 td:first-child::before {
 	content: "3";
 }
 
-#game .row4 td:first-child:before {
+#game .row4 td:first-child::before {
 	content: "4";
 }
 
-#game .row5 td:first-child:before {
+#game .row5 td:first-child::before {
 	content: "5";
 }
 
-#game .row6 td:first-child:before {
+#game .row6 td:first-child::before {
 	content: "6";
 }
 
-#game .row7 td:first-child:before {
+#game .row7 td:first-child::before {
 	content: "7";
 }
 
-#game .row8 td:first-child:before {
+#game .row8 td:first-child::before {
 	content: "8";
 }
 
-#game .row9 td:first-child:before {
+#game .row9 td:first-child::before {
 	content: "9";
 }
 
-#game .row10 td:first-child:before {
+#game .row10 td:first-child::before {
 	content: "10";
 	left: -30px;
 }
@@ -483,13 +486,12 @@ span.score {
 
 #game #hints {
 	margin-top: 50px;
-	margin-left: 15px;
+	margin-left: -8px;
 }
 
-#game #hints:before {
-	content: "Hint: ";
-	position: absolute;
-	left: -20px;
+#game #hints p {
+	text-shadow: 0px 0px 30px rgba(0, 0, 0, 1);
+	text-align: center;
 }
 
 #game .userInterface,
@@ -542,12 +544,12 @@ span.score {
 	cursor: pointer;
 }
 
-#game .userInterface ul li #reset:before {
+#game .userInterface ul li #reset::before {
 	content: url(../Images/reset.png);
 	margin-right: 3px;
 }
 
-#game .userInterface ul li #randomise:before {
+#game .userInterface ul li #randomise::before {
 	content: url(../Images/randomise.png);
 	margin-right: 4px;
 }
@@ -795,10 +797,6 @@ span.score {
 
 	#game #hints {
 		font-size: 13px;
-	}
-
-	#game #hints:before {
-		left: -17px;
 	}
 
 	#game .userInterface,

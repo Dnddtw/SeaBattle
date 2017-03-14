@@ -14,10 +14,20 @@
 	<script type="text/javascript" src="Scripts/script.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</script>
 </head>
 <body>
 <div id="body">
 	<div id="header">
+		<div id="audio">
+			<img src="Images/prevsong.png" alt="Previous Song" id="prevSong"/>
+			<img src="Images/audioOFF.png" alt="Mute/Unmute" id="turn" />
+			<img src="Images/play.png" alt="Play/Pause" id="play"/>
+			<img src="Images/nextsong.png" alt="Next Song" id="nextSong"/>
+			<input class="volume" type="range" min="0" max="10" step="0.1" value = "5"></input>
+			
+
+		</div>	
 		<div class="languages">
 			<ul>
 				<li><span id="language">Languages</span>
@@ -177,7 +187,7 @@
 		</div>
 		<div class="wrapper middleWrapper">
 			<input id="start" type="button" value="Start" />
-			<img src="Images/audioOFF.png" alt="" class="audio">			
+			<input id="newgame" type="button" value="New game" />
 			<div id="enemyDestroyedShips">
 				<p id="heading">Opponent's ships left:</p>
 				<div class="row row4">
@@ -223,7 +233,7 @@
 					<th>g</th>
 					<th>h</th>
 					<th>i</th>
-					<th>j</th>
+					<th>j</th>					
 				</tr>
 				<tr class="tr row1">
 					<td class="enemyCell cell"></td>

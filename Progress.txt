@@ -1,10 +1,22 @@
 	In progress:
-		- Normal and hard bots.
+		- After the game events.
+
+
+// 14.03.2017 
+	Updates:
+		- Music is added.
+		- Volume slider is added.
+		- Normal and hard bots are added.
+
+
 
 // 12.03.2017 
 	Updates:
 		- The website adapts to the large and medium sizes of the screen with JavaScript/jQuery.
 		- The languages are added.
+
+	Fixes:
+		- You can't start the game anymore if the ships weren't set on the user field.
 
 
 // 10.03.2017 

@@ -7,7 +7,8 @@
 // function arrayVerticalRemoving
 // function availableRow
 // function canIStart
-// function canIFinish
+// function canIFinishEnemy
+// function canIFinishUser
 // function correctHorizontal
 // function correctVertical
 // function correctHorizontalTurning
@@ -17,7 +18,9 @@
 // function destroyedShipsEnable
 // function didyouknow
 // function draw
-// function easyEnemyShot 
+// function enemyEasyMediumShot 
+// function enemyHardShot
+// function finishGame
 // function fullClear
 // function fullRandomFilling
 // function getElementFromPoint
@@ -30,18 +33,22 @@
 // function getLanguage
 // function getVerticalShip
 // function getUserArray
+// function hardBot					
 // function hint
 // function incorrectShipSetting
 // function incorrectShipTurning
 // function incorrectShipTurningRight 
 // function isCell
+// function isHitMiss				
 // function isShipDestroyedHorizontal
 // function isShipDestroyedVertical
 // function isShipHorizontal
 // function languages
+// function mediumBot
 // function missesFillingHorizontal
 // function missesFillingVertical
 // function newEmptyArray
+// function nextShot 		
 // function randomArrayFilling
 // function getRandomNumber
 // function randomTrueFalse
@@ -55,7 +62,7 @@
 // function shipLengthRight 
 // function shipTurning
 // function shipTurningRight 
-// function shootingHandler
+// function easyBot
 // function startingCol
 // function startingColRight  
 // function startingRow
@@ -63,41 +70,6 @@
 // function userSetting
 // function userShot
 // function windowSize
-
-function ca(variable) {
-	// The user function for testing.
-	console.log(variable);
-	alert(variable);
-}
-
-function c(variable) {
-	// The user function for testing.
-	console.log(variable);
-}
-
-function cc(variable1, variable2) {
-	// The user function for testing.
-	console.log(variable1 + " " + variable2);
-}
-
-function a(variable) {
-	// The user function for testing.
-	alert(variable);
-}
-
-function wa(variable) {
-	alert(variable + " has worked!");
-}
-
-function wc(variable) {
-	console.log(variable + " has worked!");
-}
-
-function wca(variable) {
-	alert(variable + " has worked!");
-	console.log(" has worked!");
-}
-
 
 /* ------------------------ Functions ------------------------ */
 
@@ -225,8 +197,9 @@ function canIStart() {
 	return result;
 }
 
-function canIFinish() {
+function canIFinishEnemy() {
 	var result = true;
+
 	$("#enemyDestroyedShips .score").each(function() {
 		var score = $(this);
 		if (shipAmount(score)) {
@@ -235,6 +208,16 @@ function canIFinish() {
 	});
 
 	return result
+}
+
+function canIFinishUser() {
+	for (var i = 0; i < userShips.length; i++) {
+		if (userShips[i] != 0) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 function correctHorizontal(array, row, col, len) {
@@ -468,17 +451,90 @@ function draw(color = "#aaddee") {
 	$("#userTable .hit").css("background-color", "red");
 }
 
-function easyEnemyShot() {
+function enemyEasyMediumShot(row, column) {
 	var result = true, 
 		array = getUserArray(),
-		table = $("#userTable .tr");
+		table = $("#userTable .tr"),
+		checked = false;
 
-	do {
-		var rowIndex = getRandomNumber(),
-			columnIndex = getRandomNumber(),
-			cell = table.eq(rowIndex).children().eq(columnIndex),
-			isHitMiss = cell.hasClass("miss") || cell.hasClass("hit");
-	} while (isHitMiss);
+	if (!isDestroyed ) {
+		for (var i = 1; row != 0 && row - i >= 0; i++) {
+			cell = table.eq(row - i).children().eq(column);
+			if (cell.hasClass("miss")) {
+				break;
+			} else if (cell.hasClass("hit")) {
+				continue;
+			} else {
+				checked = true;
+				var rowIndex = row - i,
+					columnIndex = column;
+				break;
+			}
+		}
+	
+		if (!checked) {
+			for (var i = 1; row != 9 && row + i <= 9; i++) {
+				cell = table.eq(row + i).children().eq(column);
+				if (cell.hasClass("miss")) {
+					break;
+				} else if (cell.hasClass("hit")) {
+					continue;
+				} else {
+					checked = true;
+					var rowIndex = row + i,
+						columnIndex = column;
+					break;
+				}
+			}
+		}
+
+		if (!checked) {
+			for (var i = 1; column && column - i >= 0; i++) {
+				cell = table.eq(row).children().eq(column - i);
+				if (cell.hasClass("miss")) {
+					break;
+				} else if (cell.hasClass("hit")) {
+					continue;
+				} else {
+					checked = true;
+					var rowIndex = row,
+						columnIndex = column - i;
+					break;
+				}
+			}
+		}
+
+		if (!checked) {
+			for (var i = 1; column != 9 && column + i <= 9; i++) {
+				cell = table.eq(row).children().eq(column+ i);
+				if (cell.hasClass("miss")) {
+					break;
+				} else if (cell.hasClass("hit")) {
+					continue;
+				} else {
+					checked = true;
+					var rowIndex = row,
+						columnIndex = column + i;
+					break;
+				}
+			}
+		}
+	} else {
+		do {
+			var rowIndex = getRandomNumber(),
+				columnIndex = getRandomNumber(),
+				cell = table.eq(rowIndex).children().eq(columnIndex),
+				isMissHit = isHitMiss(cell),
+				hit = true;
+			} while (isMissHit);
+	}
+
+	if (hit && array[rowIndex][columnIndex]) {
+		Grow = rowIndex;
+		Gcolumn = columnIndex;
+		isDestroyed = false;
+	}
+
 
 	if (array[rowIndex][columnIndex]) {
 		result = false;
@@ -493,13 +549,25 @@ function easyEnemyShot() {
 			if (isShipDestroyedHorizontal(table, rowIndex, columnIndex, rowLength)) {
 				missesFillingHorizontal(table, rowIndex, columnIndex, rowLength);
 				hint("enemyDestroyed");
+				userShips[rowLength - 1]--;
+				isDestroyed = true;
+				Grow = false;
+				c(userShips);
 				if (isUnmuted) {	new Audio("Audio/audioDestroyed.mp3").play();	}
-			} 
+			} else {
+				isDestroyed = false;
+			}
 		} else {
 			if (isShipDestroyedVertical(table, rowIndex, columnIndex, rowLength)) {
 				missesFillingVertical(table, rowIndex, columnIndex, rowLength);
 				hint("enemyDestroyed");
+				userShips[rowLength - 1]--;
+				isDestroyed = true;
+				Grow = false;
+				c(userShips);
 				if (isUnmuted) {	new Audio("Audio/audioDestroyed.mp3").play();	}
+			}else {
+				isDestroyed = false;
 			}
 		}
 	} else {
@@ -508,6 +576,138 @@ function easyEnemyShot() {
 
 	draw("#1af");
 	return result;
+}
+
+function enemyHardShot(row, column, hor) {
+	var result = true, 
+		array = getUserArray(),
+		table = $("#userTable .tr"),
+		checked = false;
+
+	if (!isDestroyed ) {
+		if (!hor) {
+			for (var i = 1; row != 0 && row - i >= 0; i++) {
+				cell = table.eq(row - i).children().eq(column);
+				if (cell.hasClass("miss")) {
+					break;
+				} else if (cell.hasClass("hit")) {
+					continue;
+				} else {
+					checked = true;
+					var rowIndex = row - i,
+						columnIndex = column;
+					break;
+				}
+			}
+		}
+	
+
+		if (!checked && !hor) {
+			for (var i = 1; row != 9 && row + i <= 9; i++) {
+				cell = table.eq(row + i).children().eq(column);
+				if (cell.hasClass("miss")) {
+					break;
+				} else if (cell.hasClass("hit")) {
+					continue;
+				} else {
+					checked = true;
+					var rowIndex = row + i,
+						columnIndex = column;
+					break;
+				}
+			}
+		}
+
+		if (!checked && hor) {
+			for (var i = 1; column != 0 && column - i >= 0; i++) {
+				cell = table.eq(row).children().eq(column - i);
+				if (cell.hasClass("miss")) {
+					break;
+				} else if (cell.hasClass("hit")) {
+					continue;
+				} else {
+					checked = true;
+					var rowIndex = row,
+						columnIndex = column - i;
+					break;
+				}
+			}
+		}
+
+		if (!checked && hor) {
+			for (var i = 1; column != 9 && column + i <= 9; i++) {
+				cell = table.eq(row).children().eq(column + i);
+				if (cell.hasClass("miss")) {
+					break;
+				} else if (cell.hasClass("hit")) {
+					continue;
+				} else {
+					checked = true;
+					var rowIndex = row,
+						columnIndex = column + i;
+					break;
+				}
+			}
+		}
+	} else {
+		do {
+			var rowIndex = getRandomNumber(),
+				columnIndex = getRandomNumber(),
+				cell = table.eq(rowIndex).children().eq(columnIndex),
+				isMissHit = isHitMiss(cell),
+				hit = true;
+			} while (isMissHit);
+	}
+
+	if (hit && array[rowIndex][columnIndex]) {
+		Grow = rowIndex;
+		Gcolumn = columnIndex;
+		isDestroyed = false;
+		horizontal = isShipHorizontal(array, rowIndex, columnIndex);
+	}
+
+	if (array[rowIndex][columnIndex]) {
+		result = false;
+		cell.removeClass("userCell").addClass("hit");
+
+		var isHorizontal = isShipHorizontal(array, rowIndex, columnIndex),
+			rowIndex = startingRow(array, rowIndex, columnIndex, isHorizontal),
+			columnIndex = startingCol(array, rowIndex, columnIndex, isHorizontal),
+			rowLength = shipLength(array, rowIndex, columnIndex, isHorizontal);
+
+		if (isHorizontal) {
+			if (isShipDestroyedHorizontal(table, rowIndex, columnIndex, rowLength)) {
+				missesFillingHorizontal(table, rowIndex, columnIndex, rowLength);
+				hint("enemyDestroyed");
+				userShips[rowLength - 1]--;
+				isDestroyed = true;
+				Grow = false;
+				if (isUnmuted) {	new Audio("Audio/audioDestroyed.mp3").play();	}
+			} else {
+				isDestroyed = false;
+			}
+		} else {
+			if (isShipDestroyedVertical(table, rowIndex, columnIndex, rowLength)) {
+				missesFillingVertical(table, rowIndex, columnIndex, rowLength);
+				hint("enemyDestroyed");
+				userShips[rowLength - 1]--;
+				isDestroyed = true;
+				Grow = false;
+				if (isUnmuted) {	new Audio("Audio/audioDestroyed.mp3").play();	}
+			}else {
+				isDestroyed = false;
+			}
+		}
+	} else {
+		cell.addClass("miss");
+	}
+
+	draw("#1af");
+	return result;
+}
+
+function finishGame() {
+
 }
 
 function fullClear() {
@@ -609,6 +809,49 @@ function getUserArray() {
 	return globalUserArray;
 }
 
+function hardBot() {
+	var target = $(this),
+		field = $("#enemyField"),
+		isHitMiss = target.hasClass("miss") || target.hasClass("hit");
+
+	if (!isHitMiss) {
+		var shot = userShot(target);
+	} else {
+		return;
+	}
+
+	if (canIFinishUser() || canIFinishEnemy()) {
+		field.off("click", ".enemyCell", hardBot);
+		var shot = false;
+		setTimeout(function() {
+			alert(title["gamewin"]);
+		}, 250);
+	}
+
+	if (shot) {
+		field.off("click", ".enemyCell", hardBot);
+		var timerId = setInterval(function() {
+			var isEnemyMissed = enemyHardShot(Grow, Gcolumn, horizontal);
+			if (isEnemyMissed) {
+				clearInterval(timerId);
+				if (isUnmuted) {	new Audio("Audio/audioMiss.mp3").play();	}
+				hint("userShot");
+				field.on("click", ".enemyCell", hardBot);
+			} else {
+				if (isUnmuted) {	new Audio("Audio/audioHit.mp3").play();	}
+				hint("enemyHit");
+				if (canIFinishUser()) {
+					clearInterval(timerId);
+					setTimeout(function() {
+						alert(title["gamelose"]);
+					}, 250);
+					return;
+				}
+			}
+		}, 1750);
+	}
+}
+
 function hint(key) {
 	var tip = getHint(key);
 	$("#hints").find("p")
@@ -665,6 +908,10 @@ function incorrectShipTurningRight(array, row, col, len, isHorizontal) {
 		var model = getVerticalShip(row, col, len);
 		incorrectShipSetting(model);
 	}
+}
+
+function isHitMiss(cell) {
+	return cell.hasClass("miss") || cell.hasClass("hit");
 }
 
 function isCell(cell) {
@@ -814,12 +1061,56 @@ function languages(language) {
 	$("#medium").text(title["medium"]);
 	$("#hard").text(title["hard"]);
 	$("#start").attr("value", title["start"]);
+	$("#newgame").attr("value", title["newgame"]);
 	$("#beforeGameButton").attr("value", title["continue"]);
 	$("#username").attr("placeholder", title["username"]);
 	$("#enemyTable caption").text(title["opponent"]);
 	logo.text(title["seabattle"]);
 	lan.text(title["language"]);
 
+}
+
+function mediumBot() {
+	var target = $(this),
+		field = $("#enemyField"),
+		isHitMiss = target.hasClass("miss") || target.hasClass("hit");
+
+	if (!isHitMiss) {
+		var shot = userShot(target);
+	} else {
+		return;
+	}
+
+	if (canIFinishEnemy()) {
+		field.off("click", ".enemyCell", mediumBot);
+		var shot = false;
+		setTimeout(function() {
+			alert(title["gamewin"]);
+		}, 250);
+	}
+
+	if (shot) {
+		field.off("click", ".enemyCell", mediumBot);
+		var timerId = setInterval(function() {
+			var isEnemyMissed = enemyEasyMediumShot(Grow, Gcolumn);
+			if (isEnemyMissed) {
+				clearInterval(timerId);
+				if (isUnmuted) {	new Audio("Audio/audioMiss.mp3").play();	}
+				hint("userShot");
+				field.on("click", ".enemyCell", mediumBot);
+			} else {
+				if (isUnmuted) {	new Audio("Audio/audioHit.mp3").play();	}
+				hint("enemyHit");
+				if (canIFinishUser()) {
+					clearInterval(timerId);
+					setTimeout(function() {
+						alert(title["gamelose"]);
+					}, 250);
+					return;
+				}
+			}
+		}, 1750);
+	}
 }
 
 function missesFillingHorizontal(table, row, col, len) {
@@ -882,6 +1173,10 @@ function newEmptyArray() {
 	}
 
 	return emptyArray;
+}
+
+function nextShot() {
+
 }
 
 function randomArrayFilling() {
@@ -1073,40 +1368,47 @@ function shipTurningRight() {
 	return false;
 }
 
-function shootingHandler() {
+function easyBot() {
 	var target = $(this),
 		field = $("#enemyField"),
 		isHitMiss = target.hasClass("miss") || target.hasClass("hit");
 
-		if (!isHitMiss) {
-			var shot = userShot(target);
-		} else {
-			return;
-		}
+	if (!isHitMiss) {
+		var shot = userShot(target);
+	} else {
+		return;
+	}
 
-		if (canIFinish()) {
-			field.off("click", ".enemyCell", shootingHandler);
-			var shot = false;
-			setTimeout(function() {
-				alert("");
-			}, 250);
-		}
+	if (canIFinishEnemy()) {
+		field.off("click", ".enemyCell", easyBot);
+		var shot = false;
+		setTimeout(function() {
+			alert(title["gamewin"]);
+		}, 250);
+	}
 
-		if (shot) {
-			field.off("click", ".enemyCell", shootingHandler);
-			var timerId = setInterval(function() {
-				var isEnemyMissed = easyEnemyShot();
-				if (isEnemyMissed) {
+	if (shot) {
+		field.off("click", ".enemyCell", easyBot);
+		var timerId = setInterval(function() {
+			var isEnemyMissed = enemyEasyMediumShot();
+			if (isEnemyMissed) {
+				clearInterval(timerId);
+				if (isUnmuted) {	new Audio("Audio/audioMiss.mp3").play();	}
+				hint("userShot");
+				field.on("click", ".enemyCell", easyBot);
+			} else {
+				if (isUnmuted) {	new Audio("Audio/audioHit.mp3").play();	}
+				hint("enemyHit");
+				if (canIFinishUser()) {
 					clearInterval(timerId);
-					if (isUnmuted) {	new Audio("Audio/audioMiss.mp3").play();	}
-					hint("userShot");
-					field.on("click", ".enemyCell", shootingHandler);
-				} else {
-					if (isUnmuted) {	new Audio("Audio/audioHit.mp3").play();	}
-					hint("enemyHit");
+					setTimeout(function() {
+						alert(title["gamelose"]);
+					}, 250);
+					return;
 				}
-			}, 1750);
-		}
+			}
+		}, 1750);
+	}
 }
 
 function startingCol(array, row, col, isHorizontal) {
@@ -1244,7 +1546,6 @@ function windowSize() {
 
 	switch (language) {
 		case "english":
-			wc("english height < 767");
 			if (window.matchMedia("(max-width: 970px)").matches || window.matchMedia("(max-height: 767px)").matches) {
 				userLi.css("margin-left", "25px");
 				botLi.css("margin-right", "25px")
@@ -1258,7 +1559,6 @@ function windowSize() {
 			break;
 
 		case "ukrainian": 	
-			wc("ukrainian height < 767");		
 			if (window.matchMedia("(max-width: 970px)").matches || window.matchMedia("(max-height: 767px)").matches) {
 				userLi.css("margin-left", "20px");
 				botLi
@@ -1271,7 +1571,6 @@ function windowSize() {
 			break;
 
 		case "russian":
-			wc("russian height < 767");
 			if (window.matchMedia("(max-width: 969px)").matches || window.matchMedia("(max-height: 767px)").matches) {
 				userLi.css("margin-left", "20px");
 				botLi.css("margin-right", "10px");
@@ -1303,10 +1602,11 @@ var title = titlesEnglish = {
 	"medium": "Medium",
 	"hard": "Hard",
 	"start": "Start", 
+	"newgame": "New game",
 	"opponent": "Opponent",
 	"shipsleft": "Oppopent's ships left:",
-	"gamewin": "The game is finished. Congratulations, you are winner!",
-	"gamelose": ""
+	"gamewin": "Our congratulations, you are winner! Do you want try again?",
+	"gamelose": "You have just lost the game. Do you want try again?"
 }, titlesUkrainian = {
 	"language": "Мови",
 	"didyouknow": "а ви знали?",
@@ -1319,10 +1619,11 @@ var title = titlesEnglish = {
 	"medium": "Середній",
 	"hard": "Складний",
 	"start": "Старт", 
+	"newgame": "Нова гра",
 	"opponent": "Суперник",
 	"shipsleft": "Залишилось суден суперника",
-	"gamewin": "Гра закінчена. Наші вітання, Ви - переможець!",
-	"gamelose": ""
+	"gamewin": "Наші вітання, Ви - переможець! Чи хотіли б ви зіграти ще раз?",
+	"gamelose": "Ви щойно програли. Хочете переграти?"
 },	titlesRussian = {
 	"language": "Языки",
 	"didyouknow": "а вы знали?",
@@ -1334,11 +1635,12 @@ var title = titlesEnglish = {
 	"easy": "Лёгкий",
 	"medium": "Средний",
 	"hard": "Тяжёлый",
-	"start": "Старт", 
+	"start": "Старт",
+	"newgame": "Новая игра", 
 	"opponent": "Соперник",
 	"shipsleft": "Осталось кораблей соперника:",
-	"gamewin": "Игра закончена. Поздравляем, Вы - победитель!",
-	"gamelose": ""
+	"gamewin": "Поздравляем, Вы - победитель! Хотите сыграть ещё раз?",
+	"gamelose": "Вы только что проиграли. Хотите переиграть?"
 };
 	
 var hints = hintsEnglish = {
@@ -1388,7 +1690,7 @@ var know = knowEnglish = [
 	"You can rotate the ship on the left by clicking left mouse button or on the right by clicking right mouse button.  It works as long as you don't press \"Start\" button",
 	"Easy bot doesn't even know if he hit or missed.",
 	"To contact with developer write on dnddtw@gmail.com.",
-	"You can set the ships how you want if you click on \"Reset\" button.",
+	"You can set the ships whereever you want if you click on \"Reset\" button.",
 	"You can't remove the ship from the user field if it was set. Press \"Reset\" button for new setting.",
 	"The game is still being developed.",
 	"If you click on \"Did you know?\" heading the message will be changed.",
@@ -1423,11 +1725,26 @@ var know = knowEnglish = [
 	"Вы моежете включить звуковые эффекты нажав на соответствующую иконку."
 ];
 
-var used = [0, 4, 8], knowId, isUnmuted = false;
+var used = [0, 4, 8], userShips = [4, 3, 2, 1], knowId, isUnmuted = false, Grow, Gcolumn, horizontal, isDestroyed = true;
 
 $(document).ready(function() {
 
 	$(window).resize(windowSize);
+
+	var songs = [
+			"Audio/Alan Walker - Hymn For The Weekend.mp3",
+			"Audio/The Band Perry - If I Die Young.mp3",
+			"Audio/Kygo ft. Selena Gomez - It Ain't Me.mp3"
+		],
+		songIndex = getRandomNumber(3),
+		audio = new Audio(songs[songIndex]);
+	
+	audio.volume = 0.5;
+	audio.defaultMuted = true;
+	audio.onended = function() {
+		$("#nextSong").trigger("click");
+	}
+
 
 	$("#english").on("click", function() {
 		var isNotActive = !($(this).hasClass("active"));
@@ -1464,16 +1781,16 @@ $(document).ready(function() {
 			userCaption = $('#userCaption'),
 			knowId = setInterval(didyouknow, 40000);
 
-		// if (username) {
+		if (username) {
 			fullRandomFilling();
 			startForm.hide("fast");
 			game.show("fast");	
 			hint("ready");
 			$("#didyouknow").show();
-			// $(userCaption).text(username);
-		// } else {
-			// $("#username").focus();
-		// }
+			$(userCaption).text(username);
+		} else {
+			$("#username").focus();
+		}
 
 	});	
 
@@ -1589,7 +1906,7 @@ $(document).ready(function() {
 			});
 			$("#userTable .userCell").css("background-color", "#1af");
 			$("#heading").fadeIn("slow");
-			$("#game .audio").show();
+			$("#game .botLevel").off("click", "li");
 			
 			scoreStart();
 			hint("gameStarted");
@@ -1598,21 +1915,72 @@ $(document).ready(function() {
 			hint("notready");
 		}
 
-
-		// if 
-		$("#enemyField").on("click", ".enemyCell", shootingHandler);
+		var difficulty = $("#easy").hasClass("active") ? "easy" : 
+					   $("#medium").hasClass("active") ? "medium" : "hard";
+		if (difficulty == "easy"){
+			$("#enemyField").on("click", ".enemyCell", easyBot);
+		} else if (difficulty == "medium") {
+			$("#enemyField").on("click", ".enemyCell", mediumBot);
+		} else {
+			$("#enemyField").on("click", ".enemyCell", hardBot);
+		}
 	});
 
-	$("#game .audio").on("click", function() {
+	$("#turn").on("click", function() {
 		var onoroff = $(this).attr("src"),
 			str = "Images/audioON.png";
 		if (onoroff == str) {
 			$(this).attr("src", "Images/audioOFF.png");
 			isUnmuted = false;
+			audio.muted = true;
 		} else {
 			$(this).attr("src", "Images/audioON.png");
 			isUnmuted = true;
+			audio.muted = false;
 		}
+		audio.defaultMuted = false;
+	});
+
+	$("#play").on("click", function() {
+		var onoroff = $(this).attr("src"),
+			str = "Images/play.png";
+		if (onoroff == str) {
+			$(this).attr("src", "Images/pause.png");
+			audio.play();
+		} else {
+			$(this).attr("src", "Images/play.png");
+			audio.pause();
+		}
+	});
+
+	$("#nextSong").on("click", function() {
+		if (songIndex == songs.length - 1) {
+			songIndex = 0;
+			audio.src = songs[songIndex];
+		} else {
+			songIndex++;
+			audio.src = songs[songIndex];
+		}
+		audio.load();
+		audio.play();
+
+	});	
+
+	$("#prevSong").on("click", function() {
+		if (songIndex == 0) {
+			songIndex = songs.length;
+			audio.src = songs[songIndex];
+		} else {
+			songIndex--;
+			audio.src = songs[songIndex];
+		}
+		audio.load();
+		audio.play();
+
+	});	
+
+	$("#audio .volume").mousemove(function(){
+   		audio.volume = parseFloat(this.value / 10);
 	});
 
 });

@@ -231,6 +231,8 @@ p, td, th, caption {
 /* Game's Styles */
 
 #game .middleWrapper #newgame {
+	position: absolute;
+	top: -30px;
 	display: none;
 }
 
@@ -350,7 +352,7 @@ p, td, th, caption {
 /* -------------- */
 
 #game #enemyDestroyedShips {
-	margin-left: 15px;
+	margin-left: 15px;	
 }
 
 #game #enemyDestroyedShips .row {

@@ -21,12 +21,10 @@
 	<div id="header">
 		<div id="audio">
 			<img src="Images/prevsong.png" alt="Previous Song" id="prevSong"/>
-			<img src="Images/audioOFF.png" alt="Mute/Unmute" id="turn" />
+			<img src="Images/audioON.png" alt="Mute/Unmute" id="turn" />
 			<img src="Images/play.png" alt="Play/Pause" id="play"/>
 			<img src="Images/nextsong.png" alt="Next Song" id="nextSong"/>
-			<input class="volume" type="range" min="0" max="10" step="0.1" value = "5"></input>
-			
-
+			<input class="volume" type="range" min="0" max="10" step="0.1" value = "7.5"></input>
 		</div>	
 		<div class="languages">
 			<ul>
@@ -43,7 +41,7 @@
 	</div>
 	<div class="wrapper" id="startForm">
 			<form>
-				<input type="text" name="username" id="username" placeholder="Username" required />
+				<input type="text" name="username" id="username" placeholder="Username" required autofocus />
 				<input type="button" id="beforeGameButton" value="Continue" />
 			</form>
 	</div>
@@ -367,8 +365,8 @@
 		<div class="wrapper botLevel">
 			<ul>
 				<li><span id="easy">Easy</span></li>
-				<li><span id="medium" class="active">Medium</span></li>
-				<li><span id="hard">Hard</span></li>
+				<li><span id="medium">Medium</span></li>
+				<li><span id="hard" class="active">Hard</span></li>
 			</ul>
 		</div>
 	</div>

@@ -710,6 +710,12 @@ function finishGame() {
 
 }
 
+function totalClear() {
+	$(".cell")
+		.removeClass("miss hit")
+		.css("background-color", "#fff");
+}
+
 function fullClear() {
 	// The function removes "userCell" class from the all td cells of #userTable.
 
@@ -820,12 +826,15 @@ function hardBot() {
 		return;
 	}
 
-	if (canIFinishUser() || canIFinishEnemy()) {
+	if (canIFinishEnemy()) {
 		field.off("click", ".enemyCell", hardBot);
 		var shot = false;
 		setTimeout(function() {
-			alert(title["gamewin"]);
-		}, 250);
+			var confirmed = confirm(title["gamewin"]);
+			if (confirmed) {
+				$("#newgame").trigger("click");
+			}
+		}, 500);
 	}
 
 	if (shot) {
@@ -843,12 +852,15 @@ function hardBot() {
 				if (canIFinishUser()) {
 					clearInterval(timerId);
 					setTimeout(function() {
-						alert(title["gamelose"]);
-					}, 250);
+						var confirmed = confirm(title["gamelose"]);
+						if (confirmed) {
+							$("#newgame").trigger("click");
+						}
+					}, 500);
 					return;
 				}
 			}
-		}, 1750);
+		}, 1);
 	}
 }
 
@@ -1085,8 +1097,11 @@ function mediumBot() {
 		field.off("click", ".enemyCell", mediumBot);
 		var shot = false;
 		setTimeout(function() {
-			alert(title["gamewin"]);
-		}, 250);
+			var confirmed = confirm(title["gamewin"]);
+			if (confirmed) {
+				$("#newgame").trigger("click");
+			}
+		}, 500);
 	}
 
 	if (shot) {
@@ -1104,8 +1119,11 @@ function mediumBot() {
 				if (canIFinishUser()) {
 					clearInterval(timerId);
 					setTimeout(function() {
-						alert(title["gamelose"]);
-					}, 250);
+						var confirmed = confirm(title["gamelose"]);
+						if (confirmed) {
+							$("#newgame").trigger("click");
+						}
+					}, 500);
 					return;
 				}
 			}
@@ -1383,8 +1401,11 @@ function easyBot() {
 		field.off("click", ".enemyCell", easyBot);
 		var shot = false;
 		setTimeout(function() {
-			alert(title["gamewin"]);
-		}, 250);
+			var confirmed = confirm(title["gamewin"]);
+			if (confirmed) {
+				$("#newgame").trigger("click");
+			}
+		}, 500);
 	}
 
 	if (shot) {
@@ -1402,8 +1423,11 @@ function easyBot() {
 				if (canIFinishUser()) {
 					clearInterval(timerId);
 					setTimeout(function() {
-						alert(title["gamelose"]);
-					}, 250);
+						var confirmed = confirm(title["gamelose"]);
+						if (confirmed) {
+							$("#newgame").trigger("click");
+						}
+					}, 500);
 					return;
 				}
 			}
@@ -1536,6 +1560,7 @@ function userShot(cell) {
 		shipAmountTake(score);
 	}
 
+	draw("#1af");
 	return false;
 }
 
@@ -1586,9 +1611,8 @@ function windowSize() {
 /* ------------------------ Functions ------------------------ */
 
 // The global variables.
-var globalUserArray = newEmptyArray(),
-	globalEnemyArray = randomArrayFilling(),
-	whatLanguage = "english";
+var whatLanguage = "english",
+	globalUserArray, globalEnemyArray;
 
 var title = titlesEnglish = {
 	"language": "Languages",
@@ -1740,7 +1764,7 @@ $(document).ready(function() {
 		audio = new Audio(songs[songIndex]);
 	
 	audio.volume = 0.5;
-	audio.defaultMuted = true;
+	audio.defaultMuted = false;
 	audio.onended = function() {
 		$("#nextSong").trigger("click");
 	}
@@ -1774,7 +1798,7 @@ $(document).ready(function() {
 		
 	});
 
-	$('#beforeGameButton').click(function() {
+	$('#beforeGameButton').click(function(event) {
 		var startForm = $('#startForm'),
 			game = $('#game'),
 			username = $("#username").val(),
@@ -1782,17 +1806,24 @@ $(document).ready(function() {
 			knowId = setInterval(didyouknow, 40000);
 
 		if (username) {
-			fullRandomFilling();
+			handler();
 			startForm.hide("fast");
 			game.show("fast");	
-			hint("ready");
 			$("#didyouknow").show();
 			$(userCaption).text(username);
 		} else {
 			$("#username").focus();
 		}
 
-	});	
+	});
+
+function handler() {
+	totalClear();
+	userShips = [4, 3, 2, 1];
+	globalUserArray = newEmptyArray()
+	globalEnemyArray = randomArrayFilling();
+	fullRandomFilling();
+	hint("ready");
 
 	$("#randomise").on("click", function() {
 		var draggableRows = $(".row");
@@ -1907,6 +1938,7 @@ $(document).ready(function() {
 			$("#userTable .userCell").css("background-color", "#1af");
 			$("#heading").fadeIn("slow");
 			$("#game .botLevel").off("click", "li");
+			$("#newgame").show("slow");
 			
 			scoreStart();
 			hint("gameStarted");
@@ -1926,19 +1958,33 @@ $(document).ready(function() {
 		}
 	});
 
+}
+
+	$("#newgame").on("click", function() {
+		$(this).fadeOut("slow", function() {
+			var margin = parseInt($("#start").css("margin-bottom")) - parseInt($("#start").css("height")) + parseInt($("#start").css("margin-top"));
+			$("#enemyDestroyedShips").css("marginTop", "0px");
+			$("#start").fadeIn("slow");
+		});
+		$("#heading").hide("fast");
+		$("#enemyTable").removeClass("hoverActive");
+		handler();
+		$("#randomise").trigger("click");
+	});
+
 	$("#turn").on("click", function() {
 		var onoroff = $(this).attr("src"),
-			str = "Images/audioON.png";
+			str = "Images/audioOFF.png";
 		if (onoroff == str) {
-			$(this).attr("src", "Images/audioOFF.png");
-			isUnmuted = false;
-			audio.muted = true;
-		} else {
 			$(this).attr("src", "Images/audioON.png");
 			isUnmuted = true;
 			audio.muted = false;
+		} else {
+			$(this).attr("src", "Images/audioOFF.png");
+			isUnmuted = false;
+			audio.muted = true;
+			audio.defaultMuted = false;
 		}
-		audio.defaultMuted = false;
 	});
 
 	$("#play").on("click", function() {
@@ -1954,6 +2000,7 @@ $(document).ready(function() {
 	});
 
 	$("#nextSong").on("click", function() {
+		var str = "Images/pause.png";
 		if (songIndex == songs.length - 1) {
 			songIndex = 0;
 			audio.src = songs[songIndex];
@@ -1962,20 +2009,24 @@ $(document).ready(function() {
 			audio.src = songs[songIndex];
 		}
 		audio.load();
-		audio.play();
-
+		if ($("#play").attr("src") == str) {
+			audio.play();
+		}
 	});	
 
 	$("#prevSong").on("click", function() {
+		var str = "Images/pause.png";
 		if (songIndex == 0) {
-			songIndex = songs.length;
+			songIndex = songs.length - 1;
 			audio.src = songs[songIndex];
 		} else {
 			songIndex--;
 			audio.src = songs[songIndex];
 		}
 		audio.load();
-		audio.play();
+		if ($("#play").attr("src") == str) {
+			audio.play();
+		}
 
 	});	
 
@@ -1983,4 +2034,10 @@ $(document).ready(function() {
    		audio.volume = parseFloat(this.value / 10);
 	});
 
+	$("#username").keydown(function(event) {
+	    if (event.keyCode == 13) {
+	        event.preventDefault();
+	        $("#beforeGameButton").trigger("click");
+	    }
+	});
 });

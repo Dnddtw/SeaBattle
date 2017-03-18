@@ -860,7 +860,7 @@ function hardBot() {
 					return;
 				}
 			}
-		}, 1);
+		}, 1750);
 	}
 }
 
@@ -1720,7 +1720,8 @@ var know = knowEnglish = [
 	"If you click on \"Did you know?\" heading the message will be changed.",
 	"The population in the world is currently 7.5 bullion persons as of 2017",
 	"You can choose the bot's difficulty level on the right side of screen.",
-	"You can turn on the sound effects by clicking on the icon."
+	"You can turn on the sound effects by clicking on the icon.",
+	"Release version and other you can find on https://github.com/Dnddtw/SeaBattle"
 ],	knowUkrainian = [
 	"Ласково просимо до гри МОРСЬКИЙ БІЙ. Бажаємо Вам успіху!",
 	"Гра Морський бій, як вважають, має свої витоки від французької гри L'Attaque, в яку грали під час Першої світової війни, хоча паралелі також було звернуто на гру Baslinda у 1980 році. Перша комерційна версія гри була Salvo, опублікована в 1931 році в Сполучених Штатах Америки компанією Starex.",
@@ -1733,7 +1734,8 @@ var know = knowEnglish = [
 	"Натиснувши на заголовок \"А Ви знали?\" - повідомлення зміниться.",
 	"Станом на 2017 рік, населення нашої планети становить 7.5 мільярдів осіб.",
 	"Ви можете обрати складність бота в правій частині екрану.",
-	"Ви моежете увімкнути звукові еффекти настивнувши на відповідну іконку."
+	"Ви моежете увімкнути звукові еффекти настивнувши на відповідну іконку.",
+	"Кінцеву версію та інше Ви зможете знайти на  https://github.com/Dnddtw/SeaBattle"
 ],	knowRussian = [
 	"Добро пожаловать в игру МОРСКОЙ БОЙ. Желаем Вам успеха!",
 	"Игра Морской бой, как полагают, имеет свои истоки от французской игры L'Attaque, в которую играли во время Первой мировой войны, хотя параллели также было обращены на игру Baslinda в 1980 году. Первая коммерческая версия игры была Salvo, опубликованная в 1931 году в Соединённых Штатах Америки компанией Starex.",
@@ -1746,10 +1748,11 @@ var know = knowEnglish = [
 	"Нажав на заголовок \"А Вы знали?\" - сообщение измениться.",
 	"На состояние 2017 года, население нашей планеты составляет 7.5 миллиардов человек.",
 	"Вы можете выбрать сложность бота в правой часте экрана.",
-	"Вы моежете включить звуковые эффекты нажав на соответствующую иконку."
+	"Вы моежете включить звуковые эффекты нажав на соответствующую иконку.",
+	"Конечную версию и другое Вы сможете найти на https://github.com/Dnddtw/SeaBattle"
 ];
 
-var used = [0, 4, 8], userShips = [4, 3, 2, 1], knowId, isUnmuted = false, Grow, Gcolumn, horizontal, isDestroyed = true;
+var used = [0, 4, 8], userShips = [4, 3, 2, 1], knowId, isUnmuted = true, Grow, Gcolumn, horizontal, isDestroyed = true;
 
 $(document).ready(function() {
 
@@ -1938,7 +1941,7 @@ function handler() {
 			$("#userTable .userCell").css("background-color", "#1af");
 			$("#heading").fadeIn("slow");
 			$("#game .botLevel").off("click", "li");
-			$("#newgame").show("slow");
+			$("#newgame").show(25);
 			
 			scoreStart();
 			hint("gameStarted");

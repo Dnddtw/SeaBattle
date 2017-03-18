@@ -8,6 +8,7 @@
 	Fixes:
 		- If you press on the "Play" button, the sounds effects activates automatically.
 		- The music player is set correctly now.
+		- First column is correctly displayed now.
 
 	Bug:
 		- "New Game" button can slide if Developer Setting window is opened.
